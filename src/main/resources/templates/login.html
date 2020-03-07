@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+
+    <!-- Required CSS files -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/barfiller.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/animate.css}">
+    <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/font-awesome.4.7.0.css}">
+    <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+</head>
+<!-- http://img.zcool.cn/community/0147065853aae3a8012060c8cc8117.JPG@2o.jpg -->
+<body style="background-image:url(http://pic1.win4000.com/wallpaper/2017-11-03/59fc08005e9a0.jpg) ;">
+<div class="preloader">
+    <span class="preloader-spin"></span>
+</div>
+<div class="page-title sp">
+    <div class="container text-center">
+        <h2 style="color: white;">欢迎使用</h2>
+        <p>虚心若愚，求知若渴</p>
+    </div>
+</div>
+<div class="contact-area sp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 contact-info" >
+                <div class="single-info">
+                    <h5>能控系统登录</h5>
+                </div>
+                <div class="single-info">
+                    <h5>Email</h5>
+                    <p>294877796@qq.com</p>
+                </div>
+                <div class="single-info">
+                    <h5>Introduce</h5>
+                    <p>王宏宇毕业设计展示</p>
+                    <a></a>
+                </div>
+                <div class="single-info">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <form th:action="@{/index/checkVaildate}" th:object="${Admin}" method="post" class="contact-form">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="text" th:name="name" placeholder="Name">
+                        </div>
+                        <div class="col-lg-12">
+                            <input type="password" th:name="password" placeholder="password">
+                        </div>
+                        <div class="col-lg-12">
+                            <input class="button" type="submit" value="登录" style = "float: right;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 footer_widget">
+                    <div class="inner">
+                        <h4>About</h4>
+                        <p>本系统可用水租户管理用户水费用量情况</p>
+                        <p>Water consumption of users managed by water users of the system</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 footer_widget">
+                    <div class="inner">
+                        <h4>Address</h4>
+                        <p>安徽马鞍山 <br>皖江工学院 <br>18655527294</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom" >
+        <div class="container">
+            <div class="row" >
+                <div class="col-lg-6">
+                    <div class="copyright-txt">
+                        王宏宇毕业设计展示
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+<!--Required JS files-->
+<script th:src="@{https://www.jq22.com/jquery/jquery-1.10.2.js}"></script>
+<script th:src="@{/assets/js/vendor/popper.min.js}"></script>
+<script th:src="@{/assets/js/vendor/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/vendor/owl.carousel.min.js}"></script>
+<script th:src="@{/assets/js/vendor/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/js/vendor/jquery.barfiller.js}"></script>
+<script th:src="@{/assets/js/vendor/loopcounter.js}"></script>
+<script th:src="@{/assets/js/vendor/slicknav.min.js}"></script>
+<script th:src="@{/assets/js/active.js}"></script>
+
+</body>
+
+</html>

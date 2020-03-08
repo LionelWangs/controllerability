@@ -1,6 +1,8 @@
 package com.lion.controllerability.customer.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.lion.controllerability.basisposition.data.Basisposition;
+import com.lion.controllerability.basisposition.service.BasispositionService;
 import com.lion.controllerability.customer.data.Customerbase;
 import com.lion.controllerability.customer.data.CustomerbaseExample;
 import com.lion.controllerability.customer.service.CustomerService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -24,12 +27,13 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService ;
+    @Autowired
+    private BasispositionService basispositionService ;
     /**
      * 根据用户id查询用户
      * */
-    @RequestMapping("/queryCustomer")
-    public ModelAndView queryCustomer(Long id){
-        id= Long.valueOf(2);
+    @RequestMapping("/select")
+    public ModelAndView select(Long id){
         ModelAndView mv = new ModelAndView("customer/customerSelect");
         Customerbase customerbase = customerService.selectCustomerByCustomerId(id);
         System.out.println(customerbase);
@@ -41,7 +45,7 @@ public class CustomerController {
      * 查询所有用户
      * */
     @RequestMapping("/customerList")
-    public ModelAndView queryAllCustomer(@RequestParam(required = false) String pageNum) {
+    public ModelAndView customerList(@RequestParam(required = false) String pageNum) {
         ModelAndView mv = new ModelAndView("customer/customerView");
 //        加入分页功能
         if (pageNum == null){
@@ -58,8 +62,8 @@ public class CustomerController {
     /**
      * 更新用户信息
      * */
-    @RequestMapping("/updataCustomer")
-    public ModelAndView updateCustomer(@RequestParam Customerbase customerbase) {
+    @RequestMapping("/updata")
+    public ModelAndView update(@RequestParam Customerbase customerbase) {
         ModelAndView mv = new ModelAndView("customerUpdate");
         CustomerbaseExample example = new CustomerbaseExample();
         CustomerbaseExample.Criteria criteria = example.createCriteria();
@@ -72,11 +76,14 @@ public class CustomerController {
      * 插入用户信息
      *
      * */
-    @RequestMapping("/insertCustomer")
-    public ModelAndView insertCustomer(Customerbase customerbase) {
+    @RequestMapping("/insert")
+    public ModelAndView insert(Customerbase customerbase, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
+        request.getParameter("positionname");
         //设置用户默认为正常状态
         customerbase.setStatusflag(Byte.valueOf("1"));
+        //默认设置为未绑定住户
+        customerbase.setTypeflag(Byte.valueOf("1"));
         int result = customerService.insert(customerbase);
         if (result > 0 ){
             mv.setViewName("redirect:/customer/customerList");
@@ -87,7 +94,7 @@ public class CustomerController {
     /**
      * 删除用户信息 根据用户id
      * */
-    @RequestMapping("/deleteCustomer")
+    @RequestMapping("/delete")
     public ModelAndView delete(@RequestParam String id) {
         ModelAndView mv = new ModelAndView();
         int result = customerService.delete(Long.valueOf(id));
@@ -95,6 +102,22 @@ public class CustomerController {
             mv.setViewName("redirect:/customer/customerList");
         }
         return mv;
+    }
+    /**
+     * 用户管理
+     * */
+    @RequestMapping("customerIndex")
+    public ModelAndView selectCustomer() {
+        ModelAndView mv = new ModelAndView("customer/customerIndex");
+        //查询所有用户
+        List<Customerbase> customerbases = customerService.selectAllCustomer();
+//        查询所有小区
+        List<Basisposition> basispositions = basispositionService.selectAll();
+
+        mv.addObject("customerList",customerbases);
+        mv.addObject("basispositions",basispositions);
+        return mv ;
+
     }
 
 

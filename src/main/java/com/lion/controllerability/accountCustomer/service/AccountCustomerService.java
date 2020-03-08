@@ -2,7 +2,6 @@ package com.lion.controllerability.accountCustomer.service;
 
 import com.lion.controllerability.accountCustomer.data.Accountcustomer;
 import com.lion.controllerability.accountCustomer.mapper.AccountcustomerMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,5 +30,6 @@ public class AccountCustomerService {
     public void select(){
         Accountcustomer accountcustomer = mapper.selectByPrimaryKey(Long.valueOf(1));
     }
+
 
 }

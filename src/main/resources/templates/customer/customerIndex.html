@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <title>:: Ericsson :: Transport</title>
+
+    <!-- Bootstrap Core and vandor -->
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" href="/asset/css/dropify.min.css">
+
+    <!-- Core css -->
+    <link rel="stylesheet" href="/assets/css/style.min.css"/>
+</head>
+
+<body class="font-muli theme-cyan gradient">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+    </div>
+</div>
+
+<div id="main_content">
+    <!-- Start Main top header -->
+    <div id="header_top" class="header_top">
+    </div>
+    <!-- Start Rightbar setting panel -->
+    <div id="rightsidebar" class="right_sidebar">
+    </div>
+    <!-- Start Theme panel do not add in project -->
+    <!-- Start Quick menu with more functio -->
+    <!-- Start Main leftbar navigation -->
+    <div id="left-sidebar" class="sidebar">
+        <h5 class="brand-name">能控首页<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">水务系统</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
+        </ul>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
+                <nav class="sidebar-nav">
+                    <ul class="metismenu">
+                        <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
+                        <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
+                        <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
+                        <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
+                        <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>缴费记录</span></a></li>
+                        <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
+                        <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Start project content area -->
+    <div class="page">
+        <!-- Start Page header -->
+        <div class="section-body" id="page_top" >
+            <div class="container-fluid">
+            </div>
+        </div>
+        <!-- Start Page title and tab -->
+        <div class="section-body">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center ">
+                    <div class="header-action">
+                        <h1 class="page-title">Transport</h1>
+                        <ol class="breadcrumb page-breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">用户管理</li>
+                        </ol>
+                    </div>
+                    <ul class="nav nav-tabs page-header-tab">
+                        <li class="nav-item"><a class="nav-link" id="Transport-tab" data-toggle="tab" href="#Transport-add">开户</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="Transport-add">
+            <div class="card">
+                <!--增加用户-->
+                <form class="card-body form-horizontal" th:action="@{/accountBase/choosePalace}" method="post">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="customername">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" name="mobile">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">选择开户小区<span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                            <span  οnchange="A()" id="SS">
+                                    <select name="positionname">
+                                        <span th:each="temp,Basisposition:${basispositions}">
+                                            <option th:text="${temp.positionname}">
+                                            </option>
+                                        </span>
+                                    </select>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label"></label>
+                        <div class="col-md-7">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Main project js, jQuery, Bootstrap -->
+<script src="/assets/js/lib.vendor.bundle.js"></script>
+
+<!-- Start Plugin Js -->
+
+<!-- Start project main js  and page js -->
+<script src="/assets/js/core.js"></script>
+<script src="/assets/js/dropify.js"></script>
+<script src="/assets/js/dialogs.js"></script>
+</body>
+</html>

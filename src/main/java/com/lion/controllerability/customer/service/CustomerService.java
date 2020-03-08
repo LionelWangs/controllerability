@@ -60,6 +60,12 @@ public class CustomerService {
 
     }
 
+    /**
+     * 跟新信息
+     * */
+    public void update(Customerbase customerbase) {
+        mapper.updateByPrimaryKey(customerbase);
+    }
 
     /**
      * 删除用户信息 根据id
@@ -78,23 +84,6 @@ public class CustomerService {
         Date date = new Date();
         customerbase.setRegisterdate(date);
         int result = mapper.insert(customerbase);
-
-        //插入AccountBase表中查询操作
-        CustomerbaseExample example = new CustomerbaseExample();
-        CustomerbaseExample.Criteria criteria = example.createCriteria();
-        criteria.andMobileEqualTo(customerbase.getMobile());
-        criteria.andCustomernameEqualTo(customerbase.getCustomername());
-        criteria.andMobileEqualTo(customerbase.getMobile());
-
-        List<Customerbase> customerbases = mapper.selectByExample(example);
-        Customerbase getCustomerId = customerbases.get(0);
-        Accountcustomer accountcustomer = new Accountcustomer();
-        accountcustomer.setBindtime(date);
-        accountcustomer.setActiveflag(getCustomerId.getStatusflag());
-        accountcustomer.setCustomerid(getCustomerId.getCustomerld());
-        //模拟 AccountId
-        accountcustomer.setAccountid(getCustomerId.getCustomerld());
-        accountCustomerService.insert(accountcustomer);
         return result ;
     }
 }

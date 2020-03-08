@@ -44,7 +44,7 @@
                 <nav class="sidebar-nav">
                     <ul class="metismenu">
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
-                        <li><a th:href="staff.html"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
+                        <li><a th:href="@{/customer/customerIndex}"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
                         <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
                         <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>缴费记录</span></a></li>
@@ -92,7 +92,8 @@
                                         <th>DistrictCode</th>
                                         <th>用户数</th>
                                         <th>详细地址</th>
-                                        <th>ActiveFlag</th>
+                                        <th>是否已有住户</th>
+                                        <th>开户</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -101,8 +102,14 @@
                                         <td th:text="${temp.districtcode}"></td>
                                         <td th:text="${temp.count}"></td>
                                         <td th:text="${temp.estatebriefname}"></td>
-                                        <td th:text="${temp.activeflag}"></td>
-                                        <td><button  type="button" class="btn btn-icon btn-sm" title="Map"><i class="fa fa-map"></i></button></td>
+                                        <td th:switch="${temp.activeflag}">
+                                            <div th:case="1" th:text="未开户"></div>
+                                            <div th:case="2" th:text="已开户"></div>
+                                        </td>
+                                        <td th:switch="${temp.activeflag}">
+                                            <a th:case="1" th:href="@{'/accountBase/choosePalace?positionId=' + ${temp.positionid} }">开户</a>
+                                            <a th:case="2">已开户</a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -118,7 +125,7 @@
                             <!--增加楼栋-->
                             <form class="card-body form-horizontal" method="post" th:action="@{/basisposition/insert}">
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">详细楼栋<span class="text-danger">*</span></label>
+                                    <label class="col-md-3 col-form-label">门牌号<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="positionname" value="例：101">
                                     </div>
@@ -127,6 +134,12 @@
                                     <label class="col-md-3 col-form-label">详细名称<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control" name="estatebriefname">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">户主姓名<span class="text-danger">*</span></label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" name="customerName">
                                     </div>
                                 </div>
                                 <input type="hidden" name="typeflag" value="4">

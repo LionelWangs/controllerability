@@ -1,5 +1,6 @@
 package com.lion.controllerability.basisposition.service;
 
+import com.lion.controllerability.accountBase.mapper.AccountbaseMapper;
 import com.lion.controllerability.basisposition.data.Basisposition;
 import com.lion.controllerability.basisposition.data.BasispositionConstant;
 import com.lion.controllerability.basisposition.data.BasispositionExample;
@@ -19,7 +20,6 @@ import java.util.List;
 public class BasispositionService {
     @Autowired
         private BasispositionMapper mapper ;
-
         /**
          *
          * 新增小区信息
@@ -31,6 +31,13 @@ public class BasispositionService {
             }
             int result = mapper.insert(basisposition);
             return result ;
+        }
+        /**
+         * 根据id查询
+         * */
+        public Basisposition selectHouse(String positionId) {
+            Basisposition basisposition = mapper.selectByPrimaryKey(Long.valueOf(positionId));
+            return basisposition;
         }
 
         /**
@@ -49,7 +56,7 @@ public class BasispositionService {
         /**
          * 查询该小区小有多少楼栋
          * */
-        public int conutBuilding(String positionno,String disdistrictcode) {
+        public int countBuilding(String positionno,String disdistrictcode) {
             BasispositionExample example = new BasispositionExample();
             BasispositionExample.Criteria criteria = example.createCriteria();
             criteria.andPositionnoLike((positionno+"%"));
@@ -75,7 +82,7 @@ public class BasispositionService {
     /**
      * 查询该楼栋下有多少单元
      * */
-    public int conutUnit(String positionno,String disdistrictcode) {
+    public int countUnit(String positionno,String disdistrictcode) {
         BasispositionExample example = new BasispositionExample();
         BasispositionExample.Criteria criteria = example.createCriteria();
         criteria.andDistrictcodeEqualTo(disdistrictcode);
@@ -134,6 +141,14 @@ public class BasispositionService {
         return basispositions.size();
     }
 
+    /**
+     * 根据小区名查询到positionNo
+     * */
+    public Basisposition getInfo (String positionId) {
+        Basisposition basisposition = mapper.selectByPrimaryKey(Long.valueOf(positionId));
+        return basisposition;
+    }
+
 
         /**
          *
@@ -161,5 +176,12 @@ public class BasispositionService {
             return mapper.selectByExample(example) == null;
 
 
+        }
+
+        /**
+         * 跟新住户信息
+         * */
+        public void update(Basisposition basisposition) {
+            mapper.updateByPrimaryKeySelective(basisposition);
         }
 }

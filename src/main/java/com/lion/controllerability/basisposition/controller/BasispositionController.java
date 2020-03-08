@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,13 +32,13 @@ public class BasispositionController {
      * 查询所有小区
      *
      * */
-    @RequestMapping("/selectAll")
-    public ModelAndView seleAll () {
+    @RequestMapping(value = "/selectAll" ,method = RequestMethod.GET)
+    public ModelAndView selectAll () {
         ModelAndView mv = new ModelAndView("basisposition/basispositionView");
         List<Basisposition> basispositions = basispositionService.selectAll();
         for (Basisposition building : basispositions) {
             //判断是否为楼栋
-            int conutBuilding = basispositionService.conutBuilding(building.getPositionno(),building.getDistrictcode());
+            int conutBuilding = basispositionService.countBuilding(building.getPositionno(),building.getDistrictcode());
             building.setCount(conutBuilding);
         }
         mv.addObject("basisposition",basispositions);
@@ -52,7 +53,7 @@ public class BasispositionController {
         ModelAndView mv = new ModelAndView("basisposition/buildingView");
         List<Basisposition> buliding = basispositionService.selectBuilding(positionno,districtcode);
         for (Basisposition unit : buliding){
-            int conutUnit = basispositionService.conutUnit(unit.getPositionno(),unit.getDistrictcode());
+            int conutUnit = basispositionService.countUnit(unit.getPositionno(),unit.getDistrictcode());
             unit.setCount(conutUnit);
         }
         mv.addObject("buliding",buliding);
@@ -111,7 +112,7 @@ public class BasispositionController {
             case  "2": //B表示楼栋
                  positionno = request.getParameter("positionno");
                  districtcode = request.getParameter("districtcode");
-                count = basispositionService.conutBuilding(positionno, districtcode);
+                count = basispositionService.countBuilding(positionno, districtcode);
                 basisposition.setPositionno(positionno);
                 basisposition.setDistrictcode(districtcode);
                 basisposition.setTypeflag(BasispositionConstant.BUILDING);
@@ -121,18 +122,16 @@ public class BasispositionController {
             case "3" : //P表示单元
                 positionno = request.getParameter("positionno");
                 districtcode = request.getParameter("districtcode");
-                count = basispositionService.conutBuilding(positionno, districtcode);
                 basisposition.setPositionno(positionno);
                 basisposition.setDistrictcode(districtcode);
                 basisposition.setTypeflag(BasispositionConstant.UNIT);
-                count = basispositionService.conutUnit(positionno,districtcode);
+                count = basispositionService.countUnit(positionno,districtcode);
                 basisposition.setPositionno(positionno+":U000"+(count+1));
                 mv.setViewName("redirect:/basisposition/selectUnit?positionno="+positionno+"&districtcode="+districtcode);
                 break;
             case  "4": //H表示房屋
                 positionno = request.getParameter("positionno");
                 districtcode = request.getParameter("districtcode");
-                count = basispositionService.conutBuilding(positionno, districtcode);
                 basisposition.setPositionno(positionno);
                 basisposition.setDistrictcode(districtcode);
                 basisposition.setTypeflag(BasispositionConstant.HOUSE);
@@ -143,7 +142,6 @@ public class BasispositionController {
         }
         int insert = basispositionService.insert(basisposition);
         mv.addObject("basisposition",basisposition);
-
         return mv ;
     }
 

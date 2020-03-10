@@ -38,7 +38,7 @@ public class AcccountBaseController {
 
     @RequestMapping("/insert")
     public ModelAndView insert(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("/index");
+        ModelAndView mv = new ModelAndView("index");
         Date date = new Date();
         String customerld = request.getParameter("customerld");
         String positionId = request.getParameter("positionId");
@@ -63,7 +63,7 @@ public class AcccountBaseController {
 
     @RequestMapping("/choosePalace")
     public ModelAndView choosePalace(String positionId) {
-        ModelAndView mv = new ModelAndView("/accountBase/accountBaseView");
+        ModelAndView mv = new ModelAndView("accountBase/accountBaseView");
         Basisposition basisposition = basispositionService.selectHouse(positionId);
         //所有未开户的用户
         Customerbase customerbase = new Customerbase();

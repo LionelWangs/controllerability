@@ -145,6 +145,19 @@ public class BasispositionController {
         return mv ;
     }
 
+    @RequestMapping(value = "/select" ,method = RequestMethod.GET)
+    public ModelAndView select () {
+        ModelAndView mv = new ModelAndView("money/moneyIndex");
+        List<Basisposition> basispositions = basispositionService.selectAll();
+        for (Basisposition building : basispositions) {
+            //判断是否为楼栋
+            int conutBuilding = basispositionService.countBuilding(building.getPositionno(),building.getDistrictcode());
+            building.setCount(conutBuilding);
+        }
+        mv.addObject("basisposition",basispositions);
+        return mv ;
+    }
+
 
 }
 

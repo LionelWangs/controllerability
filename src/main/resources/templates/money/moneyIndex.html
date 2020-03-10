@@ -24,7 +24,6 @@
 </div>
 
 <div id="main_content">
-    <!-- Start Main top header -->
     <div id="header_top" class="header_top">
         <div class="container">
             <div class="hleft">
@@ -86,26 +85,14 @@
         <div class="tab-pane" id="Transport-add">
             <div class="card">
                 <!--增加用户-->
-                <form class="card-body form-horizontal" th:action="@{/accountBase/choosePalace}" method="post">
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" name="customername">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
-                        <div class="col-md-7">
-                            <input type="text" class="form-control" name="mobile">
-                        </div>
-                    </div>
+                <form class="card-body form-horizontal" th:action="@{/money/selectAll}" method="post">
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">选择开户小区<span class="text-danger">*</span></label>
                         <div class="col-md-7">
                             <span  οnchange="A()" id="SS">
-                                    <select name="positionname">
-                                        <span th:each="temp,Basisposition:${basispositions}">
-                                            <option th:text="${temp.positionname}">
+                                    <select name="positionid">
+                                        <span th:each="temp,Basisposition:${basisposition}">
+                                            <option th:text="${temp.positionname}" th:value="${temp.positionid}">
                                             </option>
                                         </span>
                                     </select>
@@ -122,9 +109,17 @@
                 </form>
             </div>
         </div>
-        </div>
     </div>
 </div>
+</div>
+<script>
+    function A(){
+        document.getElementById('box').value=
+            document.getElementById('SS').options[document.getElementById('SS').selectedIndex].value;
+        {#       document.getElementById('SS').value;#}
+    }
+</script>
+
 
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script src="/assets/js/lib.vendor.bundle.js"></script>

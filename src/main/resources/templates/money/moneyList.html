@@ -8,11 +8,11 @@
     <title>:: Ericsson :: Transport</title>
 
     <!-- Bootstrap Core and vandor -->
-    <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
-    <link rel="stylesheet" th:href="@{/asset/css/dropify.min.css}">
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" href="/asset/css/dropify.min.css">
 
     <!-- Core css -->
-    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
+    <link rel="stylesheet" href="/assets/css/style.min.css"/>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -24,7 +24,6 @@
 </div>
 
 <div id="main_content">
-    <!-- Start Main top header -->
     <div id="header_top" class="header_top">
         <div class="container">
             <div class="hleft">
@@ -39,7 +38,7 @@
     <!-- Start Quick menu with more functio -->
     <!-- Start Main leftbar navigation -->
     <div id="left-sidebar" class="sidebar">
-        <h5 class="brand-name">所有单元信息<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
+        <h5 class="brand-name">能控首页<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">水务系统</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
@@ -49,7 +48,7 @@
                 <nav class="sidebar-nav">
                     <ul class="metismenu">
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
-                        <li><a th:href="@{/customer/customerIndex}"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
+                        <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
                         <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
@@ -74,12 +73,12 @@
                     <div class="header-action">
                         <h1 class="page-title">Transport</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">单元信息</li>
+                            <li class="breadcrumb-item active" aria-current="page">用户信息</li>
                         </ol>
                     </div>
                     <ul class="nav nav-tabs page-header-tab">
-                        <li class="nav-item"><a class="nav-link active" id="Transport-tab" data-toggle="tab" href="#Transport-all">Transport List</a></li>
-                        <li class="nav-item"><a class="nav-link" id="Transport-tab" data-toggle="tab" href="#Transport-add">增加单元</a></li>
+                        <li class="nav-item"><a class="nav-link active" id="Transport-tab" data-toggle="tab" href="#Transport-all">信息</a></li>
+                        <li class="nav-item"><a class="nav-link" id="Transport-tab" data-toggle="tab" href="#Transport-add">增加用户信息</a></li>
                     </ul>
                 </div>
             </div>
@@ -93,72 +92,85 @@
                                 <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
                                     <thead>
                                     <tr>
-                                        <th>单元</th>
-                                        <th>DistrictCode</th>
-                                        <th>用户数</th>
-                                        <th>详细地址</th>
-                                        <th>ActiveFlag</th>
+                                        <th>姓名</th>
+                                        <th>手机号</th>
+                                        <th>小区单元</th>
+                                        <th>门牌号</th>
+                                        <th>缴费金额</th>
+                                        <th>缴费时间</th>
+                                        <th>剩余金额</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="  temp,Basisposition:${unit}">
-                                        <td><a th:text="${temp.positionname} " th:href="@{'/basisposition/selectHouse?positionno='+${temp.positionno}+'&districtcode='+${temp.districtcode}}"></a></td>
-                                        <td th:text="${temp.districtcode}"></td>
-                                        <td th:text="${temp.count}"></td>
-                                        <td th:text="${temp.estatebriefname}"></td>
-                                        <td th:text="${temp.activeflag}"></td>
-                                        <td><button  type="button" class="btn btn-icon btn-sm" title="Map"><i class="fa fa-map"></i></button></td>
+                                    <tr th:each="  temp,MoneyRecord:${moneyrecords}">
+                                        <td th:text="${temp.customerbase.customername}"></td>
+                                        <td th:text="${temp.customerbase.mobile}"></td>
+                                        <td th:text="${temp.basisposition.estatebriefname}"></td>
+                                        <td th:text="${temp.basisposition.positionname}"></td>
+                                        <td th:text="${temp.changeamount}"></td>
+                                        <td th:text="${temp.recordtime}"></td>
+                                        <td th:text="${temp.afteramount}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/customer/customerList?pageNum=1'}">Index</a></li>
                         </ul>
                     </div>
                     <div class="tab-pane" id="Transport-add">
                         <div class="card">
-                            <!--增加楼栋-->
-                            <form class="card-body form-horizontal" method="post" th:action="@{/basisposition/insert}">
+                            <!--增加用户-->
+                            <form class="card-body form-horizontal" th:action="@{/customer/insert}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">详细单元<span class="text-danger">*</span></label>
+                                    <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="positionname" value="例：一单元">
+                                        <input type="text" class="form-control" name="customername">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">详细名称<span class="text-danger">*</span></label>
+                                    <label class="col-md-3 col-form-label">地址<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="estatebriefname">
+                                        <input type="text" class="form-control" name="adress">
                                     </div>
                                 </div>
-                                <input type="hidden" name="typeflag" value="3">
-                                <input type="hidden" name="districtcode" th:value="${districtcode}">
-                                <input type="hidden" name="positionno" th:value="${positionno}">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" name="mobile">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">身份证号码<span class="text-danger">*</span></label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" name="idno">
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">提交</button>
                                         <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Start Main project js, jQuery, Bootstrap -->
-<script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>
+<script src="/assets/js/lib.vendor.bundle.js"></script>
 
 <!-- Start Plugin Js -->
 
 <!-- Start project main js  and page js -->
-<script th:src="@{/assets/js/core.js}"></script>
-<script th:src="@{/assets/js/dropify.js}"></script>
+<script src="/assets/js/core.js"></script>
+<script src="/assets/js/dropify.js"></script>
+<script src="/assets/js/dialogs.js"></script>
 </body>
 </html>

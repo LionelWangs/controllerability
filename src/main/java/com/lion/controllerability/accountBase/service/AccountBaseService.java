@@ -67,5 +67,12 @@ public class AccountBaseService {
         Accountbase accountbase = mapper.selectByPosionId(Long.valueOf(posionid));
         return accountbase;
     }
+    /**
+     * 根据customerId查询
+     * */
+    public Accountbase selectByCustomerId(Long customerId) {
+        Accountbase accountbase = mapper.selectByCustomerId(customerId);
+        return accountbase;
+    }
 
 }

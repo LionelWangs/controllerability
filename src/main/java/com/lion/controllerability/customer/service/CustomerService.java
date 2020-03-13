@@ -86,4 +86,18 @@ public class CustomerService {
         int result = mapper.insert(customerbase);
         return result ;
     }
+    /**
+     * 根据用户手机号查询
+     * */
+    public Customerbase selectByMobile(String mobile) {
+        Customerbase customerbase = mapper.selectByMobile(mobile);
+        return customerbase;
+    }
+    /**
+     * 根据用户id查询所有有用信息
+     * */
+    public Customerbase getInfo(Long customerId){
+        Customerbase customerbase = mapper.getInfo(customerId);
+        return customerbase ;
+    }
 }

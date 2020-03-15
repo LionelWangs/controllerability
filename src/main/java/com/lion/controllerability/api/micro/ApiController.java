@@ -8,6 +8,8 @@ import com.lion.controllerability.customer.data.Info;
 import com.lion.controllerability.customer.service.CustomerService;
 import com.lion.controllerability.moneyRecord.data.Moneyrecord;
 import lombok.extern.log4j.Log4j;
+import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +38,13 @@ public class ApiController {
     @Autowired
     private AccountBaseService accountBaseService;
 
+    private static final Logger log = Logger.getLogger(ApiController.class);
 
     @PostMapping("/sendValidationCode")
     public Map sendValidationCode(String mobile) {
         Map map = new HashMap();
         if (mobile != null) {
+            log.info("xxxxx");
             map.put("statusCode",100);
         }
         return map ;
@@ -53,7 +57,6 @@ public class ApiController {
         Map map = new HashMap();
         Customerbase customerbase = customerService.selectByMobile(mobile);
         if (customerbase != null && code.equals("123456")) {
-            System.out.println("xxxxxxx");
             customerbase.setOpenid(openId);
             customerService.update(customerbase);
             map.put("statusCode" ,100);

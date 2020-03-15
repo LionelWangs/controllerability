@@ -10,9 +10,16 @@
     <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
     <!-- Core css -->
     <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";position: absolute; left: 93px;}
+        </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=1erKiRi0WCrEfgoYFukdATLSvgFP3mIx"></script>
 </head>
 <body class="font-muli theme-cyan gradient">
-<div id="main_content">
+<div>
+
     <!-- Start Main top header -->
     <div id="header_top" class="header_top">
         <div class="container">
@@ -24,15 +31,17 @@
             </div>
         </div>
     </div>
+    <div id="allmap"></div>
 </div>
 <!-- Start Quick menu with more functio -->
 <!-- Start Main leftbar navigation -->
-<div id="left-sidebar" class="sidebar">
+<div id="left-sidebar" class="sidebar" style="z-index: 99999;">
     <h5 class="brand-name">能控首页<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
     <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">水务系统</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
     </ul>
+
     <div class="tab-content mt-3">
         <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
             <nav class="sidebar-nav">
@@ -47,8 +56,52 @@
                 </ul>
             </nav>
         </div>
-    </div>
 </div>
-<script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>
+
+</div>
 </body>
+<script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>
+<style type="text/css">
+    #map img {
+        max-width: inherit;
+    }
+</style>
+<script type="text/javascript">
+    // // 百度地图API功能
+    // var map = new BMap.Map("allmap");    // 创建Map实例
+    // map.centerAndZoom(new BMap.Point(118.50,  31.72), 13);  // 初始化地图,设置中心点坐标和地图级别
+    // //添加地图类型控件
+    // map.addControl(new BMap.MapTypeControl({
+    //     mapTypes:[
+    //         BMAP_NORMAL_MAP,
+    //         BMAP_HYBRID_MAP
+    //     ]}));
+    // map.setCurrentCity("马鞍山");          // 设置地图显示的城市 此项是必须设置的
+    // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放                   // 将标注添加到地图中
+    // var map = new BMap.Map("container");
+    // var point = new BMap.Point(118.50, 31.72);
+    // map.centerAndZoom(point, 15);
+    // var marker = new BMap.Marker(point);        // 创建标注
+    // map.addOverlay(marker);                     // 将标注添加到地图中
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(118.50, 31.72);
+    map.centerAndZoom(point, 15);
+    // 编写自定义函数,创建标注
+    function addMarker(point){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+    }
+    // 随机向地图添加25个标注
+    // var bounds = map.getBounds();
+    // var sw = bounds.getSouthWest();
+    // var ne = bounds.getNorthEast();
+    var lngSpan = 118.525355;
+    var latSpan = 31.719706;
+    addMarker(point);
+    // for (var i = 0; i < 25; i ++) {
+    //     var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+    //     addMarker(point);
+    // }
+</script>
 </html>

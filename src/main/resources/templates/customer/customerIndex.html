@@ -86,11 +86,11 @@
         <div class="tab-pane" id="Transport-add">
             <div class="card">
                 <!--增加用户-->
-                <form class="card-body form-horizontal" th:action="@{/accountBase/choosePalace}" method="post">
+                <form class="card-body form-horizontal" method="post">
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" name="customername">
+                            <input type="text" class="form-control" name="customername" id="customername" >
                         </div>
                     </div>
                     <div class="form-group row">
@@ -115,7 +115,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label"></label>
                         <div class="col-md-7">
-                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="submit" class="btn btn-primary" onclick="validata()">提交</button>
                             <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                         </div>
                     </div>
@@ -125,6 +125,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validata() {
+        var customerName = $("#customername").val();
+        console.log(customerName);
+        if (customerName == '') {
+            $("#customername").val("用户姓名不得为空")
+        }
+
+    }
+</script>
 
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script src="/assets/js/lib.vendor.bundle.js"></script>

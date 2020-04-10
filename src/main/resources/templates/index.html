@@ -14,6 +14,9 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <style type="text/css">
             body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";position: absolute; left: 93px;}
+            .meterList{
+                display: none;
+            }
         </style>
     <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=1erKiRi0WCrEfgoYFukdATLSvgFP3mIx"></script>
 </head>
@@ -49,7 +52,16 @@
                     <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
                     <li><a th:href="@{/customer/customerIndex}"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
                     <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
-                    <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-users"></i><span class="meter">硬件设置</span></a>
+                        <ul class="meterList">
+                            <li>
+                                <a th:href="@{/meter/index}">新建硬件</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/meter/meterView}">表具信息</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
                     <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                     <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
@@ -67,23 +79,6 @@
     }
 </style>
 <script type="text/javascript">
-    // // 百度地图API功能
-    // var map = new BMap.Map("allmap");    // 创建Map实例
-    // map.centerAndZoom(new BMap.Point(118.50,  31.72), 13);  // 初始化地图,设置中心点坐标和地图级别
-    // //添加地图类型控件
-    // map.addControl(new BMap.MapTypeControl({
-    //     mapTypes:[
-    //         BMAP_NORMAL_MAP,
-    //         BMAP_HYBRID_MAP
-    //     ]}));
-    // map.setCurrentCity("马鞍山");          // 设置地图显示的城市 此项是必须设置的
-    // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放                   // 将标注添加到地图中
-    // var map = new BMap.Map("container");
-    // var point = new BMap.Point(118.50, 31.72);
-    // map.centerAndZoom(point, 15);
-    // var marker = new BMap.Marker(point);        // 创建标注
-    // map.addOverlay(marker);                     // 将标注添加到地图中
-    // 百度地图API功能
     var map = new BMap.Map("allmap");
     var point = new BMap.Point(118.50, 31.72);
     map.centerAndZoom(point, 15);
@@ -103,5 +98,13 @@
     //     var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
     //     addMarker(point);
     // }
+</script>
+<script>
+    $(document).ready(function(){
+        $(".meter").click(function(){
+
+            $(".meterList").css("display","inline");
+        })
+    })
 </script>
 </html>

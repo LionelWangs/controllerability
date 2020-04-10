@@ -16,6 +16,45 @@
     <result column="EstateAddress" property="estateaddress" jdbcType="VARCHAR" />
     <result column="TypeFlag" property="typeflag" jdbcType="TINYINT" />
     <result column="ActiveFlag" property="activeflag" jdbcType="TINYINT" />
+      <association property="accountbase" javaType="com.lion.controllerability.accountBase.data.Accountbase">
+          <id column="AccountId" property="accountid" jdbcType="BIGINT" />
+          <result column="PositionId" property="positionid" jdbcType="BIGINT" />
+          <result column="PositionTypeFlag" property="positiontypeflag" jdbcType="TINYINT" />
+          <result column="AccountNo" property="accountno" jdbcType="VARCHAR" />
+          <result column="UserTypeFlag" property="usertypeflag" jdbcType="TINYINT" />
+          <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+          <result column="ActiveFlag" property="activeflag" jdbcType="TINYINT" />
+          <result column="LeftMoney" property="leftmoney" jdbcType="BIGINT" />
+          <result column="AccountTypeCode" property="accounttypecode" jdbcType="CHAR" />
+      </association>
+      <association property="customerbase" javaType="com.lion.controllerability.customer.data.Customerbase">
+          <id column="Customerld" property="customerld" jdbcType="BIGINT" />
+          <result column="IdNo" property="idno" jdbcType="VARCHAR" />
+          <result column="CustomerName" property="customername" jdbcType="VARCHAR" />
+          <result column="Address" property="address" jdbcType="VARCHAR" />
+          <result column="RegisterDate" property="registerdate" jdbcType="TIMESTAMP" />
+          <result column="Mobile" property="mobile" jdbcType="VARCHAR" />
+          <result column="Phone" property="phone" jdbcType="VARCHAR" />
+          <result column="StatusFlag" property="statusflag" jdbcType="TINYINT" />
+          <result column="TypeFlag" property="typeflag" jdbcType="TINYINT" />
+          <result column="OpenId" property="openid" jdbcType="VARCHAR" />
+          <result column="UserId" property="userid" jdbcType="VARCHAR" />
+      </association>
+      <association property="accountcustomer" javaType="com.lion.controllerability.accountCustomer.data.Accountcustomer">
+          <id column="Id" property="id" jdbcType="BIGINT" />
+          <result column="AccountId" property="accountid" jdbcType="BIGINT" />
+          <result column="CustomerId" property="customerid" jdbcType="BIGINT" />
+          <result column="BindTime" property="bindtime" jdbcType="TIMESTAMP" />
+          <result column="ActiveFlag" property="activeflag" jdbcType="TINYINT" />
+      </association>
+      <association property="accountmeter" javaType="com.lion.controllerability.accountMeter.data.Accountmeter">
+          <id column="Id" property="id" jdbcType="BIGINT" />
+          <result column="AccountId" property="accountid" jdbcType="BIGINT" />
+          <result column="MeterId" property="meterid" jdbcType="BIGINT" />
+          <result column="BindTime" property="bindtime" jdbcType="TIMESTAMP" />
+          <result column="BeginDigit" property="begindigit" jdbcType="DOUBLE" />
+          <result column="ActiveFlag" property="activeflag" jdbcType="TINYINT" />
+      </association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -359,4 +398,14 @@
       ActiveFlag = #{activeflag,jdbcType=TINYINT}
     where PositionId = #{positionid,jdbcType=BIGINT}
   </update>
+
+    <select id="getByPositionId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select T1.PositionId ,T1.EstateBriefName ,T1.PositionName,T2.AccountId , T3.CustomerId ,T4.CustomerName,T4.Mobile,T5.MeterId,T5.BindTime FROM
+        Basisposition T1
+        left join AccountBase T2 on T1.PositionId = T2.PositionId
+        left join AccountCustomer T3 on T2.AccountId = T3.AccountId
+        left join CustomerBase T4 on T4.Customerld = T3.CustomerId
+        left join AccountMeter T5 on T5.AccountId = T2.AccountId
+        where T1.positionid = #{positionid,jdbcType=BIGINT}
+    </select>
 </mapper>

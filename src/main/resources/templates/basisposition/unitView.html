@@ -51,7 +51,16 @@
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
                         <li><a th:href="@{/customer/customerIndex}"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
-                        <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-users"></i><span class="meter">硬件设置</span></a>
+                            <ul class="meterList">
+                                <li>
+                                    <a th:href="@{/meter/index}">新建硬件</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/meter/meterView}">表具信息</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
                         <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>

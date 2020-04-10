@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <title>:: Ericsson :: Transport</title>
+
+    <!-- Bootstrap Core and vandor -->
+    <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
+    <link rel="stylesheet" th:href="@{/asset/css/dropify.min.css}">
+
+    <!-- Core css -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
+</head>
+<body>
+<div class="tab-pane" id="Transport-add">
+    <div class="card">
+        <!--增加用户-->
+        <form class="card-body form-horizontal" method="post" th:action="@{/basisposition/insert}">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">家庭住址<span class="text-danger">*</span></label>
+                <div class="col-md-7">
+                    <input disabled = "disabled" class="form-control" type="text" th:value="${adress}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"  disabled="disabled" name="positionname" th:value="${basisposition.getCustomerbase().customername}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">手机号码<span class="text-danger">*</span></label>
+                <div class="col-md-7">
+                    <input disabled="disabled" type="text" class="form-control" th:value="${basisposition.getCustomerbase().mobile}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">水表绑定<span class="text-danger">*</span></label>
+                <div class="col-md-7">
+                    <div th:switch="${flag}">
+                        <input th:case="true" th:value="已开户"/>
+                        <div th:case="false">
+                            <input type="text" th:value="选择水表Imei" onclick="choose()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label"></label>
+                <div class="col-md-7">
+                    <button type="submit" class="btn btn-primary">绑定</button>
+                    <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    function choose() {
+        $.ajax({
+            url:"/api/chooseMeter",
+            success:function (res) {
+                console.log(res);
+            }
+        })
+    }
+</script>
+<!-- Start Main project js, jQuery, Bootstrap -->
+<script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>
+
+<!-- Start Plugin Js -->
+
+<!-- Start project main js  and page js -->
+<script th:src="@{/assets/js/core.js}"></script>
+<script th:src="@{/assets/js/dropify.js}"></script>
+</html>

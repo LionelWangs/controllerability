@@ -9,10 +9,10 @@
 
     <!-- Bootstrap Core and vandor -->
     <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
-    <link rel="stylesheet" href="/asset/css/dropify.min.css">
+    <link rel="stylesheet" th:href="@{/asset/css/dropify.min.css}">
 
     <!-- Core css -->
-    <link rel="stylesheet" href="/assets/css/style.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -24,6 +24,7 @@
 </div>
 
 <div id="main_content">
+    <!-- Start Main top header -->
     <div id="header_top" class="header_top">
         <div class="container">
             <div class="hleft">
@@ -56,7 +57,7 @@
                                     <a th:href="@{/meter/index}">新建硬件</a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/meter/meterView}">表具信息</a>
+                                    <a href="#">表具信息</a>
                                 </li>
                             </ul>
                         </li>
@@ -80,45 +81,56 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center ">
                     <div class="header-action">
-                        <h1 class="page-title">Transport</h1>
+                        <h1 class="page-title">表具</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">用户管理</li>
+                            <li class="breadcrumb-item active" aria-current="page">新增表具</li>
                         </ol>
                     </div>
-                    <ul class="nav nav-tabs page-header-tab">
-                        <li class="nav-item"><a class="nav-link" id="Transport-tab" data-toggle="tab" href="#Transport-add">开户</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
         <div class="tab-pane" id="Transport-add">
             <div class="card">
-                <!--增加用户-->
-                <form class="card-body form-horizontal" th:action="@{/accountBase/insert}" method="post">
+                <!--新增水表-->
+                <form class="card-body form-horizontal" th:action="@{/meter/addMeter}" method="post">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">选择需要绑定的用户<span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-form-label">表具IMEI号<span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                            <span  οnchange="A()" id="SS">
-                                    <select name="customerld">
-                                        <span th:each="temp,Customerbase:${customerbases}">
-                                            <option th:text="${temp.customername} +'-'+${temp.mobile}" th:value="${temp.customerld}">
-                                            </option>
-                                        </span>
-                                    </select>
-                                </span>
+                            <input type="text" class="form-control" id="imei" name="imei"  onBlur = "check()"><div id="vaildata"></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">小区<span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-form-label">表具状态<span class="text-danger">*</span></label>
+                        <div class="form-group row">
+                            <div class="col-md-7">
+                                <input list="statusFlag" class="form-control" type="text" name="statusflag">
+                                <datalist  id="statusFlag">
+                                    <option class="col-md-3 col-form-label" value="1"  selected = "selected">使用中</option>
+                                    <option class="col-md-3 col-form-label" value="2" >维修中</option>
+                                    <option class="col-md-3 col-form-label" value="3">已关闭</option>
+                                    <option class="col-md-3 col-form-label" value="4">故障中</option>
+                                    <option class="col-md-3 col-form-label" value="5">已报废</option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">用途分类<span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" name="positionname"th:value="${basisposition.positionname}" readonly unselectable='on'>
-                            <input type="hidden" class="form-control" name="positionId"th:value="${basisposition.positionid}" readonly unselectable='on'>
+                            <input list="useTypeCode" class="form-control" type="text" name="usetypecode">
+                            <datalist  id="useTypeCode">
+                                <option class="col-md-3 col-form-label" value="生活"></option>
+                                <option class="col-md-3 col-form-label" value="维修中"></option>
+                                <option class="col-md-3 col-form-label" value="已关闭"></option>
+                                <option class="col-md-3 col-form-label" value="故障中"></option>
+                                <option class="col-md-3 col-form-label" value="已报废"></option>
+                            </datalist>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label"></label>
                         <div class="col-md-7">
-                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="submit" class="btn btn-primary" id="sumbit">提交</button>
                             <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                         </div>
                     </div>
@@ -131,6 +143,29 @@
 
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script src="/assets/js/lib.vendor.bundle.js"></script>
+<script>
+    function check() {
+        var imei = $("#imei").val();
+        $.ajax({
+            url : "/api/isExit",
+            data : {
+                imei : imei
+            },
+            dataType: 'json',
+            success:function (res) {
+                if(res.result == false) {
+                    $("#vaildata").html("<font style='color: red'>该imei已存在</font>")
+                    $("#sumbit").attr("disabled","disabled");
+                }
+                else {
+                    $("#vaildata").html("<font style='color: green'>该imei可以使用</font>");
+                    $("#sumbit").removeAttr("disabled","disabled");
+                }
+            }
+        })
+    }
+
+</script>
 
 <!-- Start Plugin Js -->
 

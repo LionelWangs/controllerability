@@ -50,7 +50,16 @@
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
                         <li><a th:href="@{/customer/customerIndex}"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
-                        <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-users"></i><span class="meter">硬件设置</span></a>
+                            <ul class="meterList">
+                                <li>
+                                    <a th:href="@{/meter/index}">新建硬件</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/meter/meterView}">表具信息</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
                         <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
@@ -94,17 +103,16 @@
                                     <tr>
                                         <th>单元</th>
                                         <th>DistrictCode</th>
-                                        <th>用户数</th>
                                         <th>详细地址</th>
                                         <th>是否已有住户</th>
                                         <th>开户</th>
+                                        <th>绑定表具</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="  temp,Basisposition:${house}">
                                         <td><a th:text="${temp.positionname} " th:href="@{'/basisposition/selectHouse?positionname='+${temp.positionno}+'&districtcode='+${temp.districtcode}}"></a></td>
                                         <td th:text="${temp.districtcode}"></td>
-                                        <td th:text="${temp.count}"></td>
                                         <td th:text="${temp.estatebriefname}"></td>
                                         <td th:switch="${temp.activeflag}">
                                             <div th:case="1" th:text="未开户"></div>
@@ -114,6 +122,7 @@
                                             <a th:case="1" th:href="@{'/accountBase/choosePalace?positionId=' + ${temp.positionid} }">开户</a>
                                             <a th:case="2">已开户</a>
                                         </td>
+                                        <td><a th:onclick="a('[[${temp.positionid}]]');">选择表具</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -162,9 +171,54 @@
         </div>
     </div>
 </div>
-
+    </div>
+</div>
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>
+<script>
+    var positionid ='';
+    function a(id) {
+        positionid = id;
+            var content = "<iframe  style=' width:1000px;\n" +
+                "\n" +
+                "        height:1200px;\n" +
+                "\n" +
+                "        position:absolute;\n" +
+                "\n" +
+                "        top:50%;\n" +
+                "\n" +
+                "        left:50%;\n" +
+                "\n" +
+                "        margin-top:100px;     /*注意：这里的上，左边距的偏移是关键，一定要是height值的一半*/\n" +
+                "\n" +
+                "        margin-left:-400px;    /*注意：这里的上，左边距的偏移是关键，一定要是width值的一半*/\n" +
+                "\n" +
+                "        border:1px solid #ffffcc;background: white'></iframe>"
+        $("body").append(content);
+            $("iframe").attr("src","/accountMeter/meterBind?positionid=" + positionid);
+    }
+
+    // $(".choose").click(function(){
+    //     positionid = $(".positionid").$(this).val();
+    //     alert(positionid);
+    //     var content = "<iframe src = '/accountMeter/meterBind' style=' width:500px;\n" +
+    //         "\n" +
+    //         "        height:400px;\n" +
+    //         "\n" +
+    //         "        position:absolute;\n" +
+    //         "\n" +
+    //         "        top:50%;\n" +
+    //         "\n" +
+    //         "        left:50%;\n" +
+    //         "\n" +
+    //         "        margin-top:-200px;     /*注意：这里的上，左边距的偏移是关键，一定要是height值的一半*/\n" +
+    //         "\n" +
+    //         "        margin-left:-250px;    /*注意：这里的上，左边距的偏移是关键，一定要是width值的一半*/\n" +
+    //         "\n" +
+    //         "        border:1px solid #ffffcc;background: white'></iframe>"
+    //     $("body").append(content);
+    // })
+</script>
 
 <!-- Start Plugin Js -->
 

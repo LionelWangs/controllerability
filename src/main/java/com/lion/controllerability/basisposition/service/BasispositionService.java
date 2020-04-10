@@ -1,6 +1,8 @@
 package com.lion.controllerability.basisposition.service;
 
+import com.lion.controllerability.accountBase.data.Accountbase;
 import com.lion.controllerability.accountBase.mapper.AccountbaseMapper;
+import com.lion.controllerability.accountMeter.data.Accountmeter;
 import com.lion.controllerability.basisposition.data.Basisposition;
 import com.lion.controllerability.basisposition.data.BasispositionConstant;
 import com.lion.controllerability.basisposition.data.BasispositionExample;
@@ -183,5 +185,14 @@ public class BasispositionService {
          * */
         public void update(Basisposition basisposition) {
             mapper.updateByPrimaryKeySelective(basisposition);
+        }
+
+        /**
+         * 查询用户是否已经绑定水表
+         * */
+
+        public Basisposition getByPositionId(Long positionId){
+            Basisposition basisposition = mapper.getByPositionId(positionId);
+            return basisposition;
         }
 }

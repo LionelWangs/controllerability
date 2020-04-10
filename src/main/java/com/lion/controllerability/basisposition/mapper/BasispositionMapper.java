@@ -97,4 +97,6 @@ public interface BasispositionMapper {
      * @mbggenerated Tue Mar 03 20:50:18 CST 2020
      */
     int updateByPrimaryKey(Basisposition record);
+
+    Basisposition getByPositionId(Long positionId);
 }

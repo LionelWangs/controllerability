@@ -6,6 +6,8 @@ import com.lion.controllerability.basisposition.data.Basisposition;
 import com.lion.controllerability.customer.data.Customerbase;
 import com.lion.controllerability.customer.data.Info;
 import com.lion.controllerability.customer.service.CustomerService;
+import com.lion.controllerability.meterBase.data.Meterbase;
+import com.lion.controllerability.meterBase.service.MeterBaseService;
 import com.lion.controllerability.moneyRecord.data.Moneyrecord;
 import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
@@ -37,6 +39,8 @@ public class ApiController {
     private CustomerService customerService;
     @Autowired
     private AccountBaseService accountBaseService;
+    @Autowired
+    private MeterBaseService meterBaseService;
 
     private static final Logger log = Logger.getLogger(ApiController.class);
 
@@ -104,4 +108,24 @@ public class ApiController {
         map.put("info",info);
         return map ;
     }
+
+    @RequestMapping("/isExit")
+    public Map isExit(Meterbase meterbase) {
+        Map map = new HashMap();
+        if (meterBaseService.isExit(meterbase.getImei())) {
+            map.put("result",true);
+            return map;
+        }
+        map.put("result" , false);
+        return map;
+    }
+
+    @RequestMapping("/chooseMeter")
+    public Map chooseMeter(){
+        Map map = new HashMap();
+        List<Meterbase> meterbases = meterBaseService.selectAll();
+        map.put("meterbases",meterbases);
+        return map;
+    }
+
 }

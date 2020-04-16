@@ -140,19 +140,19 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="mobile">
+                                        <input type="number" class="form-control" name="mobile" id="mobile" >
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">身份证号码<span class="text-danger">*</span></label>
+                                    <label class="col-md-3 col-form-label">身份证号码<span class="text-danger"></span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="idno">
+                                        <input type="number" class="form-control" name="idno" >
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">提交</button>
+                                        <button type="submit" class="btn btn-primary" onclick="check()">提交</button>
                                         <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                                     </div>
                                 </div>
@@ -164,6 +164,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    function check() {
+        var mobile = $("#mobile").val();
+        $.ajax({
+            url:"/customerMicro/check",
+            data:{
+                mobile:mobile
+            }
+
+        })
+    }
+
+</script>
 
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script src="/assets/js/lib.vendor.bundle.js"></script>

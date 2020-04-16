@@ -3,6 +3,7 @@ package com.lion.controllerability.api.micro;
 import com.lion.controllerability.accountBase.data.Accountbase;
 import com.lion.controllerability.accountBase.service.AccountBaseService;
 import com.lion.controllerability.basisposition.data.Basisposition;
+import com.lion.controllerability.basisposition.service.BasispositionService;
 import com.lion.controllerability.customer.data.Customerbase;
 import com.lion.controllerability.customer.data.Info;
 import com.lion.controllerability.customer.service.CustomerService;
@@ -41,6 +42,8 @@ public class ApiController {
     private AccountBaseService accountBaseService;
     @Autowired
     private MeterBaseService meterBaseService;
+    @Autowired
+    private BasispositionService basispositionService ;
 
     private static final Logger log = Logger.getLogger(ApiController.class);
 

@@ -31,6 +31,7 @@ public class MeterBaseService {
         MeterbaseExample example = new MeterbaseExample();
         MeterbaseExample.Criteria criteria = example.createCriteria();
         criteria.andMeteridIsNotNull();
+        criteria.andVolumeIsNull();
 //    //        判断水表状态
 //        criteria.andStatusflagEqualTo(statusFlag);
 //        criteria.andUsetypecodeEqualTo(useTyepCode);
@@ -41,11 +42,8 @@ public class MeterBaseService {
      * 判断表具是否已经存在
      * */
     public boolean isExit(String imei) {
-        MeterbaseExample example = new MeterbaseExample();
-        MeterbaseExample.Criteria criteria = example.createCriteria();
-        criteria.andImeiEqualTo(imei);
-        List<Meterbase> meterbases = mapper.selectByExample(example);
-        if (meterbases.size() == 0) {
+        Meterbase meterbase = mapper.selectByImei(imei);
+        if (meterbase != null) {
             return true;
         }
         return false;
@@ -62,5 +60,27 @@ public class MeterBaseService {
         criteria.andVolumeIsNull();
         List<Meterbase> meterbases = mapper.selectByExample(example);
         return meterbases;
+    }
+    /**
+     * 修改表具绑定
+     * */
+    public void update(Long meterId){
+        Meterbase meterbase = mapper.selectByPrimaryKey(meterId);
+        //修改初始流量 初始流量不为null为绑定
+        meterbase.setVolume(0.01);
+        mapper.updateByPrimaryKey(meterbase);
+    }
+    /**
+     * 通过imei查询meterID
+     * */
+    public Meterbase selectByImei(String imei){
+        Meterbase meterbase = mapper.selectByImei(imei);
+        return meterbase;
+    }
+    /**
+     * 根据meterID查询
+     * */
+    public Meterbase selectByMeterId(Long meterId) {
+       return mapper.selectByPrimaryKey(meterId);
     }
 }

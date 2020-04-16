@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class AccountMeterService {
+    @Autowired
     private AccountmeterMapper mapper ;
 
     /**
@@ -22,7 +23,7 @@ public class AccountMeterService {
      *  新建表具
      *
      * */
-    public int insertMeter(Accountmeter accountmeter) {
+    public int insert(Accountmeter accountmeter) {
         return mapper.insert(accountmeter);
     }
 

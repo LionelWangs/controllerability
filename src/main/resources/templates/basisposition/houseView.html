@@ -111,7 +111,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="  temp,Basisposition:${house}">
-                                        <td><a th:text="${temp.positionname} " th:href="@{'/basisposition/selectHouse?positionname='+${temp.positionno}+'&districtcode='+${temp.districtcode}}"></a></td>
+                                        <td th:text="${temp.positionname} " ></td>
                                         <td th:text="${temp.districtcode}"></td>
                                         <td th:text="${temp.estatebriefname}"></td>
                                         <td th:switch="${temp.activeflag}">
@@ -140,7 +140,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">门牌号<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="positionname" value="例：101">
+                                        <input type="text" class="form-control" name="positionname" placeholder="101">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -179,7 +179,7 @@
     var positionid ='';
     function a(id) {
         positionid = id;
-            var content = "<iframe  style=' width:1000px;\n" +
+            var content = "<iframe id='myiframe' style=' width:1000px;\n" +
                 "\n" +
                 "        height:1200px;\n" +
                 "\n" +
@@ -197,28 +197,8 @@
         $("body").append(content);
             $("iframe").attr("src","/accountMeter/meterBind?positionid=" + positionid);
     }
-
-    // $(".choose").click(function(){
-    //     positionid = $(".positionid").$(this).val();
-    //     alert(positionid);
-    //     var content = "<iframe src = '/accountMeter/meterBind' style=' width:500px;\n" +
-    //         "\n" +
-    //         "        height:400px;\n" +
-    //         "\n" +
-    //         "        position:absolute;\n" +
-    //         "\n" +
-    //         "        top:50%;\n" +
-    //         "\n" +
-    //         "        left:50%;\n" +
-    //         "\n" +
-    //         "        margin-top:-200px;     /*注意：这里的上，左边距的偏移是关键，一定要是height值的一半*/\n" +
-    //         "\n" +
-    //         "        margin-left:-250px;    /*注意：这里的上，左边距的偏移是关键，一定要是width值的一半*/\n" +
-    //         "\n" +
-    //         "        border:1px solid #ffffcc;background: white'></iframe>"
-    //     $("body").append(content);
-    // })
 </script>
+
 
 <!-- Start Plugin Js -->
 

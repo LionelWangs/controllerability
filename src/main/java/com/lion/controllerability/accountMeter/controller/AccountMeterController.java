@@ -8,10 +8,16 @@ import com.lion.controllerability.meterBase.data.Meterbase;
 import com.lion.controllerability.meterBase.service.MeterBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author wang.hongyu
@@ -19,6 +25,8 @@ import java.util.List;
  **/
 @Controller
 @RequestMapping("/accountMeter")
+@ApiIgnore
+@CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 public class AccountMeterController {
     @Autowired
     private AccountMeterService service ;
@@ -37,7 +45,10 @@ public class AccountMeterController {
             mv.addObject("flag" , false);
         }
         else{
+            Meterbase meterbase = meterBaseService.selectByMeterId(accountmeter.getMeterid());
+            mv.addObject("meterbase" , meterbase);
             mv.addObject("flag" , true);
+
         }
 //        if ()
 //        //默认设置为生活用水
@@ -50,5 +61,31 @@ public class AccountMeterController {
         mv.addObject("positionid",positionid);
         mv.addObject("meterbases",meterbases);
         return mv;
+    }
+
+    @RequestMapping("/insert")
+    @ResponseBody
+    public Map insert(Long accountid , String imei) {
+            Accountmeter accountmeter = new Accountmeter();
+            Map map = new HashMap();
+            Date date = new Date();
+            //判断imei是否存在
+         if (meterBaseService.isExit(imei)) {
+             Meterbase meterbase = meterBaseService.selectByImei(imei);
+             accountmeter.setAccountid(accountid);
+             accountmeter.setMeterid(meterbase.getMeterid());
+             accountmeter.setBindtime(date);
+             accountmeter.setActiveflag(Byte.valueOf("1"));
+             if (meterbase.getVolume() == null){
+                 int result = service.insert(accountmeter);
+                 if (result > 0) {
+                     meterBaseService.update(meterbase.getMeterid());
+                     map.put("status" ,"100");
+                     return map;
+                 }
+             }
+         }
+         map.put("status","500");
+         return map;
     }
 }

@@ -20,7 +20,10 @@
 <div class="tab-pane" id="Transport-add">
     <div class="card">
         <!--增加用户-->
-        <form class="card-body form-horizontal" method="post" th:action="@{/basisposition/insert}">
+        <form class="card-body form-horizontal" method="post" >
+
+            <!--            用户AccountId-->
+            <input type="hidden" th:value="${basisposition.getAccountcustomer().accountid}" id="accountid"/>
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">家庭住址<span class="text-danger">*</span></label>
                 <div class="col-md-7">
@@ -44,9 +47,10 @@
                 <label class="col-md-3 col-form-label">水表绑定<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                     <div th:switch="${flag}">
-                        <input th:case="true" th:value="已开户"/>
+                        <input th:case="true" th:value="${meterbase.imei}" id="imei" disabled = "disabled"/>
                         <div th:case="false">
-                            <input type="text" th:value="选择水表Imei" onclick="choose()">
+                            <input type="text" onclick="choose()" id="imei" placeholder="复制未开户设备的IMEI" />
+                            <div id="meter"></div>
                         </div>
                     </div>
                 </div>
@@ -54,8 +58,8 @@
             <div class="form-group row">
                 <label class="col-md-3 col-form-label"></label>
                 <div class="col-md-7">
-                    <button type="submit" class="btn btn-primary">绑定</button>
-                    <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary" onclick="bind()">绑定</button>
+                    <button type="submit" class="btn btn-outline-secondary" onclick="cl()">Cancel</button>
                 </div>
             </div>
         </form>
@@ -65,13 +69,48 @@
 </body>
 <script>
     function choose() {
+        var content = '';
         $.ajax({
             url:"/api/chooseMeter",
+
             success:function (res) {
-                console.log(res);
+                for (var i = 0 ; i < res.meterbases.length ;i++){
+                    content += '<tr><td>' + (res.meterbases[i].imei)+ '</td><td>' + res.meterbases[i].usetypecode+ '</td></tr>';
+                    console.log(content)
+                }
+                $("#meter").html(" <div class=\"table-responsive\">\n" +
+                    "                                <table class=\"table table-hover table-striped table-vcenter mb-0 text-nowrap\">\n" +
+                    "                                    <thead><tr><th>Imei</th><th>水表用途</th></tr></thead><tbody>" +content+ "</tbody></table></div>")
+               $("#imei").removeAttr("onclick");
             }
         })
     }
+    function bind(){
+        var accountid = $("#accountid").val();
+        var imei = $("#imei").val();
+        $.ajax({
+            async:true,
+            url:"/accountMeter/insert",
+            data:{
+                accountid:accountid,
+                imei:imei
+            },
+            success:function(res){
+                console.log(res)
+                if (res.status == "100"){
+                    alert("绑定成功");
+                }
+                else{
+                    alert("请检查Imei号是否存在或绑定")
+                }
+            },
+
+        })
+    }
+    function cl() {
+        parent.location.reload();
+    }
+
 </script>
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>

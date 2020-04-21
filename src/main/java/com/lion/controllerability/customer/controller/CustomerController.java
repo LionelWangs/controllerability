@@ -29,6 +29,11 @@ public class CustomerController {
     private CustomerService customerService ;
     @Autowired
     private BasispositionService basispositionService ;
+    @RequestMapping("/customerInfo")
+    public String customerInfo(){
+        return "customer/customerInfo";
+    }
+
     /**
      * 根据用户id查询用户
      * */
@@ -106,9 +111,9 @@ public class CustomerController {
     /**
      * 用户管理
      * */
-    @RequestMapping("customerIndex")
+    @RequestMapping("/imgIndex")
     public ModelAndView selectCustomer() {
-        ModelAndView mv = new ModelAndView("customer/customerIndex");
+        ModelAndView mv = new ModelAndView("customer/imgIndex");
         //查询所有用户
         List<Customerbase> customerbases = customerService.selectAllCustomer();
 //        查询所有小区
@@ -119,6 +124,5 @@ public class CustomerController {
         return mv ;
 
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.lion.controllerability.wechat;
+package com.lion.controllerability.wechat.controller;
 
 import com.google.common.collect.Maps;
 import com.lion.controllerability.wechat.service.WxService;

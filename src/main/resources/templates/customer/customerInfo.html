@@ -9,10 +9,10 @@
 
     <!-- Bootstrap Core and vandor -->
     <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
-    <link rel="stylesheet" href="/asset/css/dropify.min.css">
+    <link rel="stylesheet" th:href="@{/asset/css/dropify.min.css}">
 
     <!-- Core css -->
-    <link rel="stylesheet" href="/assets/css/style.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -49,9 +49,18 @@
                 <nav class="sidebar-nav">
                     <ul class="metismenu">
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
-                        <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
+                        <li><a th:href="@{/customer/imgIndex}"><i class="fa fa-user-circle-o"></i><span>数据可视化</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
-                        <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-users"></i><span class="meter">硬件设置</span></a>
+                            <ul class="meterList">
+                                <li>
+                                    <a th:href="@{/meter/index}">新建硬件</a>
+                                </li>
+                                <li>
+                                    <a href="#">用户个人信息</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
                         <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
@@ -72,71 +81,55 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center ">
                     <div class="header-action">
-                        <h1 class="page-title">Transport</h1>
+                        <h1 class="page-title">表具</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">用户管理</li>
+                            <li class="breadcrumb-item active" aria-current="page">新增表具</li>
                         </ol>
                     </div>
-                    <ul class="nav nav-tabs page-header-tab">
-                        <li class="nav-item"><a class="nav-link" id="Transport-tab" data-toggle="tab" href="#Transport-add">开户</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
         <div class="tab-pane" id="Transport-add">
             <div class="card">
-                <!--增加用户-->
+                <!--新增水表-->
                 <form class="card-body form-horizontal" method="post">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-form-label">用户手机号：</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" name="customername" id="customername" >
+                            <input type="text" class="form-control"  name="mobile" id="mobile">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-form-label">用户姓名：</label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" name="mobile">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">选择开户小区<span class="text-danger">*</span></label>
-                        <div class="col-md-7">
-                            <span  οnchange="A()" id="SS">
-                                    <select name="positionname">
-                                        <span th:each="temp,Basisposition:${basispositions}">
-                                            <option th:text="${temp.positionname}">
-                                            </option>
-                                        </span>
-                                    </select>
-                                </span>
+                            <input type="text" class="form-control"  name="customerName" id="name">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label"></label>
                         <div class="col-md-7">
-                            <button type="submit" class="btn btn-primary" onclick="validata()">提交</button>
+                            <button type="submit" class="btn btn-primary" id="sumbit" onclick="select()">提交</button>
                             <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        </div>
     </div>
 </div>
-
+</div>
 <script>
-    function validata() {
-        var customerName = $("#customername").val();
-        console.log(customerName);
-        if (customerName == '') {
-            $("#customername").val("用户姓名不得为空")
-        }
+    function select() {
+        $.ajax({
+            url:'/customerMicro/selectByexample',
+            data:{
+                mobile:$("#mobile").val(),
+                customerName:$("#name").val(),
+            },
 
+        })
     }
 </script>
-
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script src="/assets/js/lib.vendor.bundle.js"></script>
 

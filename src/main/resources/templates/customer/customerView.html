@@ -48,7 +48,7 @@
                 <nav class="sidebar-nav">
                     <ul class="metismenu">
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
-                        <li><a href="staff.html"><i class="fa fa-user-circle-o"></i><span>用户管理</span></a></li>
+                        <li><a th:href="@{/customer/imgIndex}"><i class="fa fa-user-circle-o"></i><span>数据可视化</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
                         <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
                         <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>缴费记录</span></a></li>
@@ -138,21 +138,22 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
+                                    <label class="col-md-3 col-form-label">身份证号码<span class="text-danger"></span></label>
                                     <div class="col-md-7">
-                                        <input type="number" class="form-control" name="mobile" id="mobile" >
+                                        <input type="number" class="form-control" name="idno" placeholder="非必填">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">身份证号码<span class="text-danger"></span></label>
+                                    <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="number" class="form-control" name="idno" >
+                                        <input type="number" class="form-control" name="mobile" id="mobile" onblur="check()">
+                                        <span class="info"></span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary" onclick="check()">提交</button>
+                                        <button type="submit" class="btn btn-primary" id="sumbit">提交</button>
                                         <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                                     </div>
                                 </div>
@@ -168,13 +169,30 @@
 <script>
     function check() {
         var mobile = $("#mobile").val();
-        $.ajax({
-            url:"/customerMicro/check",
-            data:{
-                mobile:mobile
-            }
+        if (mobile.length != 11) {
+            $(".info").html("<span style='color: red'>请检查号码长度</span>")
+        }
+        else {
+            $.ajax({
+                url:"/customerMicro/check",
+                data:{
+                    mobile:mobile
+                },
+                success:function (res) {
+                    console.log(res);
+                    if (res.status == 100) {
+                        $(".info").html("<span style='color: red'>号码已存在，请检查号码</span>");
+                        $("#sumbit").attr("disabled","disabled");
+                    }
+                    else {
+                        $(".info").html("<span style='color: green'>号码可以使用</span>");
+                        $("#sumbit").removeAttr("disabled","disabled");
+                    }
+                }
 
-        })
+            })
+        }
+
     }
 
 </script>

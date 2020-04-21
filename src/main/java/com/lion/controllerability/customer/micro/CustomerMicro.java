@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +41,27 @@ public class CustomerMicro {
         }
         else
             map.put("status",500);
+        return map;
+
+    }
+    /**
+     *
+     * 条件查询用户信息
+     *
+     * */
+    @RequestMapping("/selectByexample")
+    public Map selectByexample(String mobile , String customerName ) {
+        Map map = new HashMap();
+        CustomerbaseExample customerbaseExample = new CustomerbaseExample();
+        CustomerbaseExample.Criteria criteria = customerbaseExample.createCriteria();
+        if (mobile != null) {
+            criteria.andMobileEqualTo(mobile);
+        }
+        if (customerName != "") {
+            criteria.andCustomernameEqualTo(customerName);
+        }
+        List<Customerbase> customerbases = mapper.selectByExample(customerbaseExample);
+        map.put("customer",customerbases);
         return map;
 
     }

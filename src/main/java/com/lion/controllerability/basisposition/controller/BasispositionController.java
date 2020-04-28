@@ -136,7 +136,7 @@ public class BasispositionController {
                 basisposition.setDistrictcode(districtcode);
                 basisposition.setTypeflag(BasispositionConstant.HOUSE);
                 count = basispositionService.conutHouse(positionno,districtcode);
-                basisposition.setPositionno(basisposition.getPositionno()+":E000"+(count+1));
+                basisposition.setPositionno(basisposition.getPositionno()+":H000"+(count+1));
                 mv.setViewName("redirect:/basisposition/selectHouse?positionno="+positionno+"&districtcode="+districtcode);
                 break;
         }

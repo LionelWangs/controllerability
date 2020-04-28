@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <title>:: Ericsson :: Transport</title>
+    <title>楼栋信息</title>
 
     <!-- Bootstrap Core and vandor -->
     <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
-    <link rel="stylesheet" th:href="@{/asset/css/dropify.min.css}">
+    <link rel="stylesheet" th:src="@{../asset/css/dropify.min.css}">
 
     <!-- Core css -->
     <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
@@ -61,7 +61,7 @@
                             </ul>
                         </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
-                        <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
+                        <li><a th:href="@{/customer/customerInfo}"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
                     </ul>
                 </nav>
@@ -96,6 +96,7 @@
             <div class="container-fluid">
                 <div class="tab-content">
                     <div class="tab-pane active" id="Transport-all">
+                        <input type="hidden" th:value="${positionno}" id="positionno">
                         <div class="card">
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
@@ -133,7 +134,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">详细楼栋<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="positionname" value="例：一号楼">
+                                        <input type="text" class="form-control" name="positionname" placeholder="一号楼" onblur="check()" id="positionname">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -148,7 +149,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary" disabled = "disabled" id="button">Submit</button>
                                         <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                                     </div>
                                 </div>
@@ -157,7 +158,37 @@
                     </div>
         </div>
     </div>
+        </div>
+    </div>
+
 </div>
+        <script>
+            function check() {
+                $.ajax({
+                    url:"/basispositionMicro/check",
+                    data:{
+                        positionname:$("#positionname").val(),
+                        positionno:$("#positionno").val(),
+                        typeflag : 2
+
+                    },
+                    success:function (res) {
+                        console.log(res);
+                        if (res.status == "null"){
+                            alert("请输入楼栋");
+                        }
+                        if (res.status == "false") {
+                            alert("该楼栋已存在");
+                            $("#button").attr("disabled","disabled");
+                        }
+                        if (res.status == "true") {
+                            $("#positionname").append("<p>该楼栋可以使用</p>")
+                            $("#button").removeAttr("disabled");
+                        }
+                    }
+                })
+            }
+        </script>
 
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>

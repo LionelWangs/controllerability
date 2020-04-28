@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,16 +53,21 @@ public class CustomerMicro {
     @RequestMapping("/selectByexample")
     public Map selectByexample(String mobile , String customerName ) {
         Map map = new HashMap();
+        List list = new ArrayList();
         CustomerbaseExample customerbaseExample = new CustomerbaseExample();
         CustomerbaseExample.Criteria criteria = customerbaseExample.createCriteria();
         if (mobile != null) {
-            criteria.andMobileEqualTo(mobile);
+            criteria.andMobileLike("%"+mobile+"%");
         }
         if (customerName != "") {
-            criteria.andCustomernameEqualTo(customerName);
+            criteria.andCustomernameLike("%"+customerName+"%");
         }
         List<Customerbase> customerbases = mapper.selectByExample(customerbaseExample);
-        map.put("customer",customerbases);
+        for (Customerbase customerbase : customerbases) {
+            Customerbase info = mapper.getInfo(customerbase.getCustomerld());
+            list.add(info);
+        }
+        map.put("list",list);
         return map;
 
     }

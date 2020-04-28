@@ -408,4 +408,10 @@
         left join AccountMeter T5 on T5.AccountId = T2.AccountId
         where T1.positionid = #{positionid,jdbcType=BIGINT}
     </select>
+    <select id="check" resultMap="BaseResultMap" parameterType="com.lion.controllerability.basisposition.data.Basisposition">
+        SELECT * FROM Basisposition WHERE
+        PositionNo LIKE #{positionno,jdbcType=VARCHAR} AND
+        PositionName = #{positionname,jdbcType=VARCHAR} AND
+        TypeFlag = #{typeflag,jdbcType=TINYINT}
+    </select>
 </mapper>

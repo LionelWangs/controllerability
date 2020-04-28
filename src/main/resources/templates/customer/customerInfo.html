@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <title>:: Ericsson :: Transport</title>
+    <title>用户信息</title>
 
     <!-- Bootstrap Core and vandor -->
-    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
-    <link rel="stylesheet" th:href="@{/asset/css/dropify.min.css}">
+    <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
+    <link rel="stylesheet" th:src="@{../asset/css/dropify.min.css}">
 
     <!-- Core css -->
-    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
+    <link rel="stylesheet" th:src="@{/assets/css/style.min.css}"/>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -62,7 +62,7 @@
                             </ul>
                         </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
-                        <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
+                        <li><a th:href="@{/customer/customerInfo}"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
                     </ul>
                 </nav>
@@ -81,9 +81,9 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center ">
                     <div class="header-action">
-                        <h1 class="page-title">表具</h1>
+                        <h1 class="page-title">查询用户</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">新增表具</li>
+                            <li class="breadcrumb-item active" aria-current="page">查询用户信息</li>
                         </ol>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
         <div class="tab-pane" id="Transport-add">
             <div class="card">
                 <!--新增水表-->
-                <form class="card-body form-horizontal" method="post">
+                <form class="card-body form-horizontal">
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">用户手机号：</label>
                         <div class="col-md-7">
@@ -105,27 +105,59 @@
                             <input type="text" class="form-control"  name="customerName" id="name">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label"></label>
-                        <div class="col-md-7">
-                            <button type="submit" class="btn btn-primary" id="sumbit" onclick="select()">提交</button>
-                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
-                        </div>
-                    </div>
                 </form>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label"></label>
+                    <div class="col-md-7">
+                        <button type="submit" class="btn btn-primary" id="sumbit" onclick="select()">提交</button>
+                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div id="info" style="margin-left: 700px">
+
 </div>
 <script>
     function select() {
+        var content = '';
         $.ajax({
             url:'/customerMicro/selectByexample',
             data:{
                 mobile:$("#mobile").val(),
                 customerName:$("#name").val(),
             },
+            success:function (res) {
+                console.log(res);
+                for (var i = 0 ; i < res.list.length ;i++){
+                    var house = '';
+                    house  = res.list[i].basisposition.estatebriefname +''+ res.list[i].basisposition.positionname;
+                    console.log(house);
+                    if (house == "nullnull"){
+                        house = "未开户";
+                    }
+                    content += '<tr>' +
+                        '<td>' + (res.list[i].customername)+ '</td>' +
+                        '<td>' + res.list[i].mobile+ '</td>' +
+                        '<td>' + house + '</td>' +
+                        // '<td>' + res.list[i].mobile+ '</td>' +
+                        // '<td>' + res.list[i].mobile+ '</td>' +
+                        '</tr>';
+                }
+                $("#info").html(" <div class=\"table-responsive\">\n" +
+                    "                                <table class=\"table table-hover table-striped table-vcenter mb-0 text-nowrap\">\n" +
+                    "                                    <thead>" +
+                    "                                       <tr>" +
+                    "                                           <th >用户姓名</th>" +
+                    "                                           <th>手机号</th>" +
+                    "                                           <th>家庭住址</th>" +
+                    "                                       </tr>" +
+                    "                                       </thead>" +
+                    "                                            <tbody>" +content+ "</tbody>" +
+                    "                                       </table></div>")
+            }
 
         })
     }
@@ -137,7 +169,7 @@
 
 <!-- Start project main js  and page js -->
 <script src="/assets/js/core.js"></script>
-<script src="/assets/js/dropify.js"></script>
+<script src="/assets/js/dropify.j"></script>
 <script src="/assets/js/dialogs.js"></script>
 </body>
 </html>

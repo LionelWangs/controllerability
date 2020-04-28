@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <title>:: Ericsson :: Transport</title>
+    <title>缴费记录</title>
 
     <!-- Bootstrap Core and vandor -->
-    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
-    <link rel="stylesheet" href="/asset/css/dropify.min.css">
+    <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
+    <link rel="stylesheet" th:src="@{../asset/css/dropify.min.css}">
 
     <!-- Core css -->
-    <link rel="stylesheet" href="/assets/css/style.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -61,7 +61,7 @@
                             </ul>
                         </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
-                        <li><a href="library.html"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
+                        <li><a th:href="@{/customer/customerInfo}"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
                     </ul>
                 </nav>

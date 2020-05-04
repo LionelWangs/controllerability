@@ -29,7 +29,9 @@ public class MeterBaseController {
         ModelAndView mv = new ModelAndView("meter/addMeter");
         return mv ;
     }
-
+/**
+ * 绑定
+ * */
     @RequestMapping("/bind")
     public ModelAndView bind() {
         ModelAndView mv = new ModelAndView("meter/bindMeter");
@@ -47,7 +49,9 @@ public class MeterBaseController {
         mv.addObject("meterBases",meterbases);
         return mv;
     }
-
+/**
+ * 查询所有表具
+ * */
     @RequestMapping("/meterView")
     public ModelAndView meterView(){
         ModelAndView mv = new ModelAndView("meter/meterView");

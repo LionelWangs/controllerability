@@ -38,10 +38,9 @@
     <!-- Start Quick menu with more functio -->
     <!-- Start Main leftbar navigation -->
     <div id="left-sidebar" class="sidebar">
-        <h5 class="brand-name">能控首页<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
+        <h5 class="brand-name">缴费记录<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">水务系统</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
         </ul>
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
@@ -82,12 +81,11 @@
                     <div class="header-action">
                         <h1 class="page-title">Transport</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">用户信息</li>
+                            <li class="breadcrumb-item active" aria-current="page">缴费记录</li>
                         </ol>
                     </div>
                     <ul class="nav nav-tabs page-header-tab">
                         <li class="nav-item"><a class="nav-link active" id="Transport-tab" data-toggle="tab" href="#Transport-all">信息</a></li>
-                        <li class="nav-item"><a class="nav-link" id="Transport-tab" data-toggle="tab" href="#Transport-add">增加用户信息</a></li>
                     </ul>
                 </div>
             </div>
@@ -103,7 +101,6 @@
                                     <tr>
                                         <th>姓名</th>
                                         <th>手机号</th>
-                                        <th>小区单元</th>
                                         <th>门牌号</th>
                                         <th>缴费金额</th>
                                         <th>缴费时间</th>
@@ -114,57 +111,20 @@
                                     <tr th:each="  temp,MoneyRecord:${moneyrecords}">
                                         <td th:text="${temp.customerbase.customername}"></td>
                                         <td th:text="${temp.customerbase.mobile}"></td>
-                                        <td th:text="${temp.basisposition.estatebriefname}"></td>
                                         <td th:text="${temp.basisposition.positionname}"></td>
-                                        <td th:text="${temp.changeamount}"></td>
+                                        <td th:text="${temp.changeamount} / 100 + '元'"></td>
                                         <td th:text="${temp.recordtime}"></td>
-                                        <td th:text="${temp.afteramount}"></td>
+                                        <td th:text="${temp.afteramount} / 100 + '元'"></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" th:href="@{'/customer/customerList?pageNum=1'}">Index</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/money/selectAll?positionid='+${positionid}+'&pageNum=1'}">Index</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/money/selectAll?positionid='+${positionid}+'&pageNum='+${pageNum - 1}}">Pervious</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/money/selectAll?positionid='+${positionid}+'&pageNum='+${pageNum + 1}}">Next</a></li>
                         </ul>
-                    </div>
-                    <div class="tab-pane" id="Transport-add">
-                        <div class="card">
-                            <!--增加用户-->
-                            <form class="card-body form-horizontal" th:action="@{/customer/insert}" method="post">
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">用户姓名<span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control" name="customername">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">地址<span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control" name="adress">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Mobile<span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control" name="mobile">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">身份证号码<span class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control" name="idno">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label"></label>
-                                    <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">提交</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>

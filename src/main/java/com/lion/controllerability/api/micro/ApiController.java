@@ -57,6 +57,23 @@ public class ApiController {
         return map ;
     }
     /**
+     * 查看是否已经绑定
+     * */
+    @PostMapping("/isBind")
+    public Map isBind(String openId){
+        Map map = new HashMap();
+        Customerbase bind = customerService.isBind(openId);
+        if (bind != null){
+            //用户已经绑定
+            map.put("statusFlag" , false);
+            map.put("customer",bind);
+            return map ;
+        }
+        map.put("statusFlag" , true);
+        return map;
+
+    }
+    /**
      * 绑定用户信息
      * */
     @PostMapping("/bind")
@@ -130,6 +147,12 @@ public class ApiController {
         map.put("meterbases",meterbases);
         return map;
     }
+//    @RequestMapping("/charge")
+//    public Map charge(String mobile) {
+//        Map map = new HashMap();
+//
+//    }
+//
 
 //    @GetMapping("/getHouse")
 //    public Map getHouse(String ) {

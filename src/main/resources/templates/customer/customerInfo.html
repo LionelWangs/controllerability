@@ -12,7 +12,7 @@
     <link rel="stylesheet" th:src="@{../asset/css/dropify.min.css}">
 
     <!-- Core css -->
-    <link rel="stylesheet" th:src="@{/assets/css/style.min.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.min.css}"/>
 </head>
 
 <body class="font-muli theme-cyan gradient">
@@ -57,7 +57,7 @@
                                     <a th:href="@{/meter/index}">新建硬件</a>
                                 </li>
                                 <li>
-                                    <a href="#">用户个人信息</a>
+                                    <a th:href="@{/meter/meterView}">表具信息</a>
                                 </li>
                             </ul>
                         </li>
@@ -110,7 +110,6 @@
                     <label class="col-md-3 col-form-label"></label>
                     <div class="col-md-7">
                         <button type="submit" class="btn btn-primary" id="sumbit" onclick="select()">提交</button>
-                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                     </div>
                 </div>
             </div>

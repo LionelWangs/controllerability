@@ -1,5 +1,6 @@
 package com.lion.controllerability.moneyRecord.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.lion.controllerability.basisposition.data.Basisposition;
 import com.lion.controllerability.basisposition.service.BasispositionService;
 import com.lion.controllerability.moneyRecord.data.Moneyrecord;
@@ -28,15 +29,23 @@ public class MoneyRecordController {
     private BasispositionService basispositionService ;
 //    根据小区查询所有账单记录
     @RequestMapping("/selectAll")
-    public ModelAndView selectAll( String positionid) {
+    public ModelAndView selectAll(@RequestParam(value = "positionid") String positionid,String pageNum) {
         ModelAndView mv = new ModelAndView("money/moneyList");
         List<Moneyrecord> moneyrecords = new ArrayList<>();
         Basisposition info = basispositionService.getInfo(positionid);
         List<Basisposition> basispositions = basispositionService.selectHouse(info.getPositionno(), info.getDistrictcode());
+        //        加入分页功能
+        if (pageNum == null){
+            pageNum = "1";
+        }
         for (Basisposition b : basispositions){
+            Integer page = Integer.valueOf(pageNum);
+            PageHelper.startPage(page ,10);
             moneyrecords.addAll(service.selectByUnit(b.getPositionid()));
+            mv.addObject("pageNum",page);
         }
         mv.addObject("moneyrecords",moneyrecords);
+        mv.addObject("positionid",positionid);
         return mv ;
     }
 }

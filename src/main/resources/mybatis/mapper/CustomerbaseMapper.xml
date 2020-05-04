@@ -438,4 +438,13 @@
         left join MoneyRecord T5 on T5.AccountId = T2.AccountId
         where Customerld = #{customerld,jdbcType=BIGINT}
     </select>
+    <select id="selectAllCustomer" resultMap="BaseResultMap">
+        select *
+        from CustomerBase T1
+    </select>
+    <select id="isBind" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select *
+        from CustomerBase T1
+        where openId = #{openId}
+    </select>
 </mapper>

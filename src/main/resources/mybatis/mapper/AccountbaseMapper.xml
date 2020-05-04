@@ -381,4 +381,8 @@
       AccountTypeCode = #{accounttypecode,jdbcType=CHAR}
     where AccountId = #{accountid,jdbcType=BIGINT}
   </update>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from AccountBase
+    </select>
 </mapper>

@@ -370,7 +370,6 @@
       RecordTime = #{recordtime,jdbcType=TIMESTAMP},
       Remark = #{remark,jdbcType=VARCHAR},
       BillNo = #{billno,jdbcType=VARCHAR}
-    where RecordId = #{recordid,jdbcType=BIGINT}
   </update>
 
     <select id="selectAllByPositionId" resultMap="BaseResultMap" parameterType="java.lang.Long">

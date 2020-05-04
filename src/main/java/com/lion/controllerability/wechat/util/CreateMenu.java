@@ -13,7 +13,7 @@ public class CreateMenu {
 		//菜单对象
 		Button btn = new Button();
 		//第一个一级菜单
-		btn.getButton().add(new ViewButton("水费查询", "http://101.37.33.94:81/dist/index.html"));
+		btn.getButton().add(new ViewButton("水费查询", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1b075537c82c1bca&redirect_uri=http://101.37.33.94/wechat/GetUserInfo&response_type=code&scope=snsapi_userinfo#wechat_redirect"));
 		//转为json9
 		JSONObject jsonObject = JSONObject.fromObject(btn);
 		//准备url

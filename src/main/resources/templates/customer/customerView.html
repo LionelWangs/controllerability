@@ -50,7 +50,16 @@
                         <li><a th:href="@{/basisposition/selectAll}"><i class="fa fa-black-tie"></i><span>楼栋管理</span></a></li>
                         <li><a th:href="@{/customer/imgIndex}"><i class="fa fa-user-circle-o"></i><span>数据可视化</span></a></li>
                         <li><a th:href="@{/customer/customerList}"><i class="fa fa-users"></i><span>所有用户信息</span></a></li>
-                        <li><a href="departments.html"><i class="fa fa-users"></i><span>水费设置</span></a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-users"></i><span class="meter">硬件设置</span></a>
+                            <ul class="meterList">
+                                <li>
+                                    <a th:href="@{/meter/index}">新建硬件</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/meter/meterView}">表具信息</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>缴费记录</span></a></li>
                         <li><a th:href="@{/customer/customerInfo}"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
                         <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
@@ -106,10 +115,10 @@
                                         <td th:text="${temp.customername}"></td>
                                         <td th:text="${temp.mobile}"></td>
                                         <td th:text="${temp.customerld}"></td>
-                                        <td th:text="${temp.address}"></td>
+                                        <td th:text="${temp.basisposition.estatebriefname}"></td>
                                         <td th:text="${temp.statusflag}"></td>
                                         <td th:text="${temp.registerdate}"></td>
-                                        <td><button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm" ><i class="fa fa-trash-o text-danger"></i></button></td>
+                                        <td><a th:href="@{'/customer/delete?customerid=' +${temp.customerld}}">删除</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -205,6 +214,7 @@
 <!-- Start project main js  and page js -->
 <script src="/assets/js/core.js"></script>
 <script src="/assets/js/dropify.js"></script>
-<script src="/assets/js/dialogs.js"></script>
+<script th:src="@{/assets/js/dialogs.js}"></script>
+<script th:src="@{/assets/js/sweetalert.min.js}"></script>
 </body>
 </html>

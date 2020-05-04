@@ -91,7 +91,7 @@ public class CustomerController {
         customerbase.setTypeflag(Byte.valueOf("1"));
         int result = customerService.insert(customerbase);
         if (result > 0 ){
-            mv.setViewName("redirect:/customer/customerList");
+            mv.setViewName("redirect:customer/customerList");
         }
         return mv ;
     }
@@ -100,9 +100,9 @@ public class CustomerController {
      * 删除用户信息 根据用户id
      * */
     @RequestMapping("/delete")
-    public ModelAndView delete(@RequestParam String id) {
+    public ModelAndView delete(@RequestParam String customerid) {
         ModelAndView mv = new ModelAndView();
-        int result = customerService.delete(Long.valueOf(id));
+        int result = customerService.delete(Long.valueOf(customerid));
         if (result > 0) {
             mv.setViewName("redirect:/customer/customerList");
         }

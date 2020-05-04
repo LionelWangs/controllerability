@@ -82,7 +82,7 @@
                     <div class="header-action">
                         <h1 class="page-title">Transport</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">用户管理</li>
+                            <li class="breadcrumb-item active" aria-current="page">绑定住户</li>
                         </ol>
                     </div>
                     <ul class="nav nav-tabs page-header-tab">
@@ -111,7 +111,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">小区<span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                            <input type="text" class="form-control" name="positionname"th:value="${basisposition.positionname}" readonly unselectable='on'>
+                            <input type="text" class="form-control" name="positionname"th:value="${basisposition.estatebriefname}+${basisposition.positionname}" readonly unselectable='on'>
                             <input type="hidden" class="form-control" name="positionId"th:value="${basisposition.positionid}" readonly unselectable='on'>
                         </div>
                     </div>
@@ -119,7 +119,6 @@
                         <label class="col-md-3 col-form-label"></label>
                         <div class="col-md-7">
                             <button type="submit" class="btn btn-primary">提交</button>
-                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                         </div>
                     </div>
                 </form>

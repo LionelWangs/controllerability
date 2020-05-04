@@ -129,8 +129,7 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label"></label>
                         <div class="col-md-7">
-                            <button type="submit" class="btn btn-primary" id="sumbit">提交</button>
-                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="sumbit" disabled = "disabled">提交</button>
                         </div>
                     </div>
                 </form>
@@ -154,16 +153,19 @@
             success:function (res) {
                 if(res.result == true) {
                     $("#vaildata").html("<font style='color: red'>该imei已存在</font>")
-                    $("#sumbit").attr("disabled","disabled");
                 }
                 else {
-                    $("#vaildata").html("<font style='color: green'>该imei可以使用</font>");
-                    $("#sumbit").removeAttr("disabled","disabled");
+                    if (imei == ''){
+                        $("#vaildata").html("<font style='color: red'>不可为空</font>");
+                    }else {
+                        $("#vaildata").html("<font style='color: green'>该imei可以使用</font>");
+                        $("#sumbit").removeAttr("disabled","disabled");
+                    }
                 }
             }
         })
     }
-
+sh
 </script>
 
 <!-- Start Plugin Js -->

@@ -1,10 +1,5 @@
 package com.lion.controllerability.customer.service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.lion.controllerability.accountCustomer.data.Accountcustomer;
-import com.lion.controllerability.accountCustomer.mapper.AccountcustomerMapper;
 import com.lion.controllerability.accountCustomer.service.AccountCustomerService;
 import com.lion.controllerability.customer.data.Customerbase;
 import com.lion.controllerability.customer.data.CustomerbaseExample;
@@ -13,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +35,7 @@ public class CustomerService {
      * 查询全部用户信息
      * */
     public List<Customerbase> selectAllCustomer() {
-        CustomerbaseExample customerExample = new CustomerbaseExample();
-        CustomerbaseExample.Criteria criteria = customerExample.createCriteria();
-        criteria.andIdnoIsNotNull();
-        criteria.andMobileIsNotNull();
-        List<Customerbase> customerbases = mapper.selectByExample(customerExample);
+        List<Customerbase> customerbases = mapper.selectAllCustomer();
         return customerbases;
     }
 
@@ -58,6 +48,13 @@ public class CustomerService {
         int result = mapper.updateByExample(customerbase, customerExample);
         return result ;
 
+    }
+    /**
+     * 根据openId查询
+     * */
+    public Customerbase isBind(String openId){
+        Customerbase bind = mapper.isBind(openId);
+        return bind;
     }
 
     /**
@@ -73,7 +70,6 @@ public class CustomerService {
     public int delete(Long id) {
         int result = mapper.deleteByPrimaryKey(id);
         return result;
-
     }
 
     /**
@@ -100,4 +96,10 @@ public class CustomerService {
         Customerbase customerbase = mapper.getInfo(customerId);
         return customerbase ;
     }
+//    /**
+//     * 根据手机号码查询账单
+//     * */
+//    public Customerbase charge(String mobile) {
+//
+//    }
 }

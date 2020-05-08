@@ -42,7 +42,6 @@
         <h5 class="brand-name">所有单元信息<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">水务系统</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Admin</a></li>
         </ul>
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
@@ -114,7 +113,7 @@
                                         <td><a th:text="${temp.positionname} " th:href="@{'/basisposition/selectHouse?positionno='+${temp.positionno}+'&districtcode='+${temp.districtcode}}"></a></td>
                                         <td th:text="${temp.districtcode}"></td>
                                         <td th:text="${temp.count}"></td>
-                                        <td th:text="${temp.estatebriefname}"></td>
+                                        <td th:text="${temp.estateaddress}"></td>
                                         <td th:text="${temp.activeflag}"></td>
                                     </tr>
                                     </tbody>
@@ -133,18 +132,18 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">详细单元<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="positionname" value="例：一单元">
+                                        <input type="text" class="form-control" name="positionname" placeholder="例：一单元" onblur="check()" id="positionname">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">详细名称<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="estatebriefname">
+                                        <input type="text" class="form-control" name="estateaddress" th:value="${estateaddress}">
                                     </div>
                                 </div>
                                 <input type="hidden" name="typeflag" value="3">
                                 <input type="hidden" name="districtcode" th:value="${districtcode}">
-                                <input type="hidden" name="positionno" th:value="${positionno}">
+                                <input type="hidden" name="positionno" th:value="${positionno}" id="positionno">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
@@ -159,6 +158,35 @@
         </div>
     </div>
 </div>
+    <script>
+        function check() {
+            $.ajax({
+                url:"/basispositionMicro/check",
+                data:{
+                    positionname:$("#positionname").val(),
+                    positionno:$("#positionno").val(),
+                    typeflag : 2
+
+                },
+                success:function (res) {
+                    console.log(res);
+                    if (res.status == "null"){
+                        alert("请输入楼栋");
+                    }
+                    if (res.status == "false") {
+                        alert("该楼栋已存在");
+                        $("#button").attr("disabled","disabled");
+                    }
+                    if (res.status == "true") {
+                        var adress = $("#estateaddress").val();
+                        adress += $("#positionname").val();
+                        $("#estateaddress").val(adress);
+                        $("#button").removeAttr("disabled");
+                    }
+                }
+            })
+        }
+    </script>
 
 <!-- Start Main project js, jQuery, Bootstrap -->
 <script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>

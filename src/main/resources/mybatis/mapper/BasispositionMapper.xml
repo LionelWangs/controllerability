@@ -414,4 +414,9 @@
         PositionName = #{positionname,jdbcType=VARCHAR} AND
         TypeFlag = #{typeflag,jdbcType=TINYINT}
     </select>
+    <select id="basispositionCheck" resultMap="BaseResultMap" parameterType="com.lion.controllerability.basisposition.data.Basisposition">
+        SELECT * FROM Basisposition WHERE
+        PositionName = #{positionname,jdbcType=VARCHAR} AND
+        TypeFlag = #{typeflag,jdbcType=TINYINT}
+    </select>
 </mapper>

@@ -109,9 +109,9 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="  temp,Basisposition:${basisposition}">
-                                        <td><a th:text="${temp.positionname} " th:href="@{'/basisposition/selectBuilding?positionno='+${temp.positionno}+'&districtcode='+${temp.districtcode}}" th:method="post"></a></td>
+                                        <td><a th:text="${temp.positionname} " th:href="@{'/basisposition/selectBuilding?positionno='+${temp.positionno}+'&districtcode='+${temp.districtcode}+'&estateaddress='+${temp.estateaddress}}" th:method="post"></a></td>
                                         <td th:text="${temp.districtcode}"></td>
-                                        <td th:text="${temp.estatebriefname}"></td>
+                                        <td th:text="${temp.estateaddress}"></td>
                                         <td th:text="${temp.activeflag}"></td>
                                         <td><span th:text="${temp.count}" ></span></td>
 <!--                                        <td><button  type="button" class="btn btn-icon btn-sm" title="Map"><i class="fa fa-map"></i></button></td>-->
@@ -132,7 +132,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">地区<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input list="source" class="form-control" type="text" name="districtcode">
+                                        <input list="source" class="form-control" type="text" name="districtcode" id="districtcode">
                                         <datalist  id="source">
                                             <option class="col-md-3 col-form-label" value="340503" hidden>花山区</option>
                                             <option class="col-md-3 col-form-label" value="340504" hidden>雨山区</option>
@@ -146,21 +146,20 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">小区简称<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="positionname">
+                                        <input type="text" class="form-control" name="positionname" onblur="check()" id="positionname">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label">详细名称<span class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control" name="estatebriefname">
+                                        <input type="text" class="form-control" name="estateaddress" th:value="${estateaddress}" id="estateaddress">
                                     </div>
                                 </div>
                                 <input type="hidden" name="typeflag" value="1">
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                        <button type="submit" class="btn btn-primary" disabled = "disabled" id="button">创建</button>
                                     </div>
                                 </div>
                             </form>
@@ -180,6 +179,35 @@
 <!--</script>-->
 
 <!-- Start Main project js, jQuery, Bootstrap -->
+<script>
+    function check() {
+        $.ajax({
+            url:"/basispositionMicro/basispositionCheck",
+            data:{
+                positionname:$("#positionname").val(),
+                typeflag : 1
+
+            },
+            success:function (res) {
+                console.log(res);
+                if (res.status == "null"){
+                    alert("请输入小区");
+                    $("#button").attr("disabled","disabled");
+                }
+                if (res.status == "false") {
+                    alert("该小区已存在");
+                    $("#button").attr("disabled","disabled");
+                }
+                if (res.status == "true") {
+                    var adress = $("#estateaddress").val();
+                    adress += $("#positionname").val();
+                    $("#estateaddress").val(adress);
+                    $("#button").removeAttr("disabled");
+                }
+            }
+        })
+    }
+</script>
 <script th:src="@{/assets/js/lib.vendor.bundle.js}"></script>
 
 <!-- Start Plugin Js -->

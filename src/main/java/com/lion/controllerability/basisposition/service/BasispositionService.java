@@ -80,6 +80,18 @@ public class BasispositionService {
             List<Basisposition> basispositions = mapper.selectByExample(example);
             return basispositions;
         }
+        /**
+         * 查询小区
+         * */
+        public List<Basisposition> selectBasistion(String positionno,String districtcode) {
+            BasispositionExample example = new BasispositionExample();
+            BasispositionExample.Criteria criteria = example.createCriteria();
+            criteria.andPositionnoLike((positionno));
+            criteria.andDistrictcodeEqualTo(districtcode);
+            criteria.andTypeflagEqualTo(BasispositionConstant.VILLAGE);
+            List<Basisposition> basispositions = mapper.selectByExample(example);
+            return basispositions;
+        }
 
     /**
      * 查询该楼栋下有多少单元

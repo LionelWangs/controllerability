@@ -37,6 +37,7 @@ public class BasispositionController {
         ModelAndView mv = new ModelAndView("basisposition/basispositionView");
         List<Basisposition> basispositions = basispositionService.selectAll();
         for (Basisposition building : basispositions) {
+            mv.addObject("estateaddress",building.getEstateaddress());
             //判断是否为楼栋
             int conutBuilding = basispositionService.countBuilding(building.getPositionno(),building.getDistrictcode());
             building.setCount(conutBuilding);
@@ -49,13 +50,21 @@ public class BasispositionController {
      *
      * */
     @RequestMapping("/selectBuilding")
-    public ModelAndView selectBuilding (String positionno,String districtcode) {
+    public ModelAndView selectBuilding (String positionno,String districtcode,String estateaddress) {
         ModelAndView mv = new ModelAndView("basisposition/buildingView");
         List<Basisposition> buliding = basispositionService.selectBuilding(positionno,districtcode);
         for (Basisposition unit : buliding){
             int conutUnit = basispositionService.countUnit(unit.getPositionno(),unit.getDistrictcode());
             unit.setCount(conutUnit);
         }
+        if (estateaddress == null){
+            String address = buliding.get(0).getPositionno();
+            String substring = address.substring(0, address.length() - 6);
+            List<Basisposition> basispositions = basispositionService.selectBasistion(substring, districtcode);
+            mv.addObject("estateaddress",basispositions.get(0).getEstateaddress());
+        }
+        else
+            mv.addObject("estateaddress",estateaddress);
         mv.addObject("buliding",buliding);
         mv.addObject("positionno",positionno);
         mv.addObject("districtcode",districtcode);
@@ -65,13 +74,21 @@ public class BasispositionController {
      * 查询小区下单元信息
      * */
     @RequestMapping("/selectUnit")
-    public ModelAndView selectUnit (String positionno,String districtcode) {
+    public ModelAndView selectUnit (String positionno,String districtcode,String estateaddress) {
         ModelAndView mv = new ModelAndView("basisposition/unitView");
         List<Basisposition> unit = basispositionService.selectUntit( positionno,districtcode);
         for (Basisposition units : unit) {
             int counHouse = basispositionService.conutHouse(positionno,districtcode);
             units.setCount(counHouse);
         }
+        if (estateaddress == null){
+            String address = unit.get(0).getPositionno();
+            String substring = address.substring(0, address.length() - 6);
+            List<Basisposition> basispositions = basispositionService.selectBuilding(substring, districtcode);
+            mv.addObject("estateaddress",basispositions.get(0).getEstateaddress());
+        }
+        else
+            mv.addObject("estateaddress",estateaddress);
         mv.addObject("unit",unit);
         mv.addObject("positionno",positionno);
         mv.addObject("districtcode",districtcode);
@@ -98,6 +115,7 @@ public class BasispositionController {
         ModelAndView mv = new ModelAndView();
         String positionno ;
         String districtcode ;
+        String estateaddress = request.getParameter("estateaddress");
         //默认设置为活跃
         basisposition.setActiveflag(Byte.valueOf("1"));
         int count ;
@@ -107,6 +125,7 @@ public class BasispositionController {
             case "1" : //E表示小区
                  count = basispositionService.countVillage();
                 basisposition.setPositionno("E000"+(count+1));
+                basisposition.setEstateaddress(basisposition.getPositionname());
                 mv.setViewName("redirect:/basisposition/selectAll");
                 break;
             case  "2": //B表示楼栋
@@ -115,6 +134,7 @@ public class BasispositionController {
                 count = basispositionService.countBuilding(positionno, districtcode);
                 basisposition.setPositionno(positionno);
                 basisposition.setDistrictcode(districtcode);
+                basisposition.setEstateaddress(estateaddress);
                 basisposition.setTypeflag(BasispositionConstant.BUILDING);
                 basisposition.setPositionno(positionno+":B000"+(count+1));
                 mv.setViewName("redirect:/basisposition/selectBuilding?positionno="+positionno+"&districtcode="+districtcode);
@@ -124,6 +144,7 @@ public class BasispositionController {
                 districtcode = request.getParameter("districtcode");
                 basisposition.setPositionno(positionno);
                 basisposition.setDistrictcode(districtcode);
+                basisposition.setEstateaddress(estateaddress);
                 basisposition.setTypeflag(BasispositionConstant.UNIT);
                 count = basispositionService.countUnit(positionno,districtcode);
                 basisposition.setPositionno(positionno+":U000"+(count+1));
@@ -135,6 +156,7 @@ public class BasispositionController {
                 basisposition.setPositionno(positionno);
                 basisposition.setDistrictcode(districtcode);
                 basisposition.setTypeflag(BasispositionConstant.HOUSE);
+                basisposition.setEstateaddress(estateaddress);
                 count = basispositionService.conutHouse(positionno,districtcode);
                 basisposition.setPositionno(basisposition.getPositionno()+":H000"+(count+1));
                 mv.setViewName("redirect:/basisposition/selectHouse?positionno="+positionno+"&districtcode="+districtcode);

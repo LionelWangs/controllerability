@@ -24,7 +24,7 @@ import java.util.Map;
 public class BasispositionMicro {
     @Autowired
     private BasispositionMapper mapper ;
-////    判断是否已经存在书库
+////    判断是否已经存在数据
     @RequestMapping("/check")
     public Map check(String positionno, String positionname ,Byte typeflag){
         Map map = new HashMap();
@@ -34,6 +34,24 @@ public class BasispositionMicro {
             return map;
         }
         Basisposition basisposition = mapper.check(positionno+"%", positionname ,typeflag);
+        if (basisposition != null) {
+            map.put("status","false");
+            return map;
+        }
+        else
+            map.put("status","true");
+        return map;
+    }
+    //判断小区是否存在
+    @RequestMapping("/basispositionCheck")
+    public Map basispositionCheck(String positionname ,Byte typeflag){
+        Map map = new HashMap();
+        if ("".equals(positionname)){
+            //判断是否输入
+            map.put("status" , "null");
+            return map;
+        }
+        Basisposition basisposition = mapper.basispositionCheck(positionname ,typeflag);
         if (basisposition != null) {
             map.put("status","false");
             return map;

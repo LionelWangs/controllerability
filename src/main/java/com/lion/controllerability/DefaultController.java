@@ -13,4 +13,8 @@ public class DefaultController {
     public String index() {
         return "login";
     }
+    @RequestMapping("/infoView")
+    public String infoView(){
+        return "infoView";
+    }
 }

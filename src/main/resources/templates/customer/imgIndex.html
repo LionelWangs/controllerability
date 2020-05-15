@@ -62,7 +62,7 @@
                         </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
                         <li><a th:href="@{/customer/customerInfo}"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
-                        <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
+                        <li><a th:href="@{/infoView}"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -153,6 +153,37 @@
         if (option && typeof option === "object") {
             myChart.setOption(option, true);
         }
+        name = $("#changeName").find("option:selected").text();
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var app = {};
+        option = null;
+        option = {
+            title:{
+                text: name + '年用水量'
+            },
+            legend: {},
+            tooltip: {},
+            dataset: {
+                dimensions: ['product', '2018', '2019', '2020'],
+                source: [
+                    {product: '用水量', '2018': Math.random() * 100, '2019': Math.random() *100, '2020': Math.random() * 100 },
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
     }
     name = $("#changeName").find("option:selected").text();
     // 基于准备好的dom，初始化echarts实例
@@ -167,11 +198,8 @@
         legend: {},
         tooltip: {},
         dataset: {
-            dimensions: ['product', '2018', '2019', '2020'],
+            dimensions: [],
             source: [
-                {product: '用水量', '2018': 43.3, '2019': 85.8, '2020': 93.7},
-                {product: '用水量', '2018': 83.1, '2019': 73.4, '2020': 55.1},
-                {product: '用水量', '2018': 86.4, '2019': 65.2, '2020': 82.5},
             ]
         },
         xAxis: {type: 'category'},
@@ -187,8 +215,10 @@
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
+
 </script>
 <script>
+    var month =[1, 1, 1, 1, 1290, 1, 1320,932, 1, 934, 1290, 1330, 1320,932, 901, 934, 1290, 1330, 1320];
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('day'));
 
@@ -207,7 +237,7 @@
             type: 'value'
         },
         series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320,932, 901, 934, 1290, 1330, 1320,932, 901, 934, 1290, 1330, 1320],
+            data: month,
             type: 'line'
         }]
     };

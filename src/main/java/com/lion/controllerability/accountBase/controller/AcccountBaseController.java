@@ -38,7 +38,7 @@ public class AcccountBaseController {
 
     @RequestMapping("/insert")
     public ModelAndView insert(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("index");
+        ModelAndView mv = new ModelAndView();
         Date date = new Date();
         String customerld = request.getParameter("customerld");
         String positionId = request.getParameter("positionId");
@@ -56,6 +56,9 @@ public class AcccountBaseController {
             basispositionService.update(info);
             customerbase.setTypeflag(Byte.valueOf("2"));
             customerService.update(customerbase);
+            String positionno = info.getPositionno();
+            String substring = positionno.substring(0, positionno.length() - 6);
+            mv.setViewName("redirect:/basisposition/selectHouse?positionno="+substring+"&districtcode="+info.getDistrictcode());
         }
         return mv ;
 

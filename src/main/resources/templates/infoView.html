@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <title>表具信息</title>
+    <title>用户信息</title>
 
     <!-- Bootstrap Core and vandor -->
     <link rel="stylesheet" th:href="@{https://www.jq22.com/jquery/bootstrap-4.2.1.css}">
@@ -24,6 +24,7 @@
 </div>
 
 <div id="main_content">
+    <!-- Start Main top header -->
     <div id="header_top" class="header_top">
         <div class="container">
             <div class="hleft">
@@ -38,7 +39,7 @@
     <!-- Start Quick menu with more functio -->
     <!-- Start Main leftbar navigation -->
     <div id="left-sidebar" class="sidebar">
-        <h5 class="brand-name">所有小区<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
+        <h5 class="brand-name">能控首页<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">水务系统</a></li>
         </ul>
@@ -79,56 +80,41 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center ">
                     <div class="header-action">
+                        <h1 class="page-title">使用介绍</h1>
                         <ol class="breadcrumb page-breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">表具信息</li>
+                            <li class="breadcrumb-item active" aria-current="page">介绍</li>
                         </ol>
                     </div>
-                    <ul class="nav nav-tabs page-header-tab">
-                        <li class="nav-item"><a class="nav-link active" id="Transport-tab" data-toggle="tab" href="#Transport-all">Transport List</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
-        <div class="section-body mt-4">
-            <div class="container-fluid">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="Transport-all">
-                        <div class="card">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
-                                    <thead>
-                                    <tr>
-                                        <th>meterid</th>
-                                        <th>typeid</th>
-                                        <th>imei</th>
-                                        <th>statusflag</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="  temp,Meterbase:${meterBases}">
-                                        <td th:text="${temp.meterid}"></td>
-                                        <td th:text="${temp.typeid}"></td>
-                                        <td th:text="${temp.imei}"></td>
-                                        <td th:switch = "${temp.statusflag}">
-                                                <p th:case="'1'">使用中</p>
-                                                <p th:case="'2'">维修中</p>
-                                                <p th:case="'3'">已关闭</p>
-                                                <p th:case="'4'">故障中</p>
-                                                <p th:case="'5'">已报废</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
+<div id="info" style="margin-left: 300px">
+<h3>移动端使用说明：</h3>
+    <div>
+        <span>1.扫码关注公众号</span>
+        <img src="1.png"style="height: 200px;width: 200px" class="img-rounded">
+    </div>
+    <div>
+        <span>2.打开公众号</span>
+        <img src="2.png"style="height: 400px;width: 200px" class="img-rounded">
+    </div>
+    <div>
+        <span>3.点击水费&nbsp&nbsp&nbsp</span>
+        <img src="3.png"style="height: 400px;width: 200px" class="img-rounded">
+    </div>
+    <div>
+        <span>4.输入手机号</span>
+        <img src="4.png"style="height: 400px;width: 200px" class="img-rounded">
+    </div>
+    <div>
+        <span>5.用户主界面</span>
+        <img src="5.png"style="height: 400px;width: 200px" class="img-rounded">
+    </div>
+    <div>
+        <span>5.个人信息&nbsp&nbsp&nbsp</span>
+        <img src="6.png"style="height: 400px;width: 200px" class="img-rounded">
     </div>
 </div>
 <!-- Start Main project js, jQuery, Bootstrap -->

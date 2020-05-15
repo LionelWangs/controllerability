@@ -61,7 +61,7 @@
                         </li>
                         <li><a th:href="@{/basisposition/select}"><i class="fa fa-graduation-cap"></i><span>账单记录</span></a></li>
                         <li><a th:href="@{/customer/customerInfo}"><i class="fa fa-book"></i><span>个人用户信息</span></a></li>
-                        <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
+                        <li><a th:href="@{/infoView}"><i class="fa fa-bullhorn"></i><span>介绍页面</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -121,7 +121,10 @@
                                             <a th:case="1" th:href="@{'/accountBase/choosePalace?positionId=' + ${temp.positionid} }">开户</a>
                                             <a th:case="2">已开户</a>
                                         </td>
-                                        <td><a th:onclick="a('[[${temp.positionid}]]');">选择表具</a></td>
+                                        <td th:switch="${temp.activeflag}">
+                                            <a th:case="2" th:onclick="a('[[${temp.positionid}]]');">选择表具</a>
+                                            <a th:case="1">请先绑定住户</a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -161,7 +164,6 @@
                                     <label class="col-md-3 col-form-label"></label>
                                     <div class="col-md-7">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                                     </div>
                                 </div>
                             </form>
